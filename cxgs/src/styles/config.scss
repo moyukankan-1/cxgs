@@ -1,0 +1,6 @@
+@mixin positions($top,$color: '') {
+  position: absolute;
+  left: 30px;
+  top: $top + px;
+  color: $color;
+}
