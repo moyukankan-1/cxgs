@@ -7,19 +7,21 @@
       <div class="form-item">
         <label>用户名</label>
         <input type="text" placeholder="请输入用户名">
+        <svg-icon icon-class="geren"></svg-icon>
       </div>
       <div class="form-item">
         <label>密码</label>
         <input type="password" placeholder="请输入密码">
+        <svg-icon icon-class="suo"></svg-icon>
       </div>
     </form>
+    <button class="btn" @click="sumbit">登录</button>
   </div>
 </template>
 <script>
 export default {
-  data () {
-    return {
-    }
+  setup(props) {
+
   }
 }
 </script>
@@ -44,6 +46,7 @@ export default {
     @include positions(250);
     width: calc(100% - 60px);
     .form-item {
+      position: relative;
       border-bottom: 1px solid #2c2c22;
       margin-bottom: 10px;
       label {
@@ -60,7 +63,21 @@ export default {
           font-size: 14px;
         }
       }
+      svg {
+        position: absolute;
+        top: 30px;
+        right: 10px;
+      }
     }
+  }
+  .btn {
+    @include positions(450);
+    width: calc(100% - 60px);
+    height: 40px;
+    line-height: 40px;
+    border-radius: 25px;
+    color: #fff;
+    background: deepskyblue;
   }
 }
 </style>

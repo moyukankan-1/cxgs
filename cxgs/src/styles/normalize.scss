@@ -27,6 +27,12 @@
    font: inherit;
    vertical-align: baseline;
  }
+ button {
+  margin: 0px;
+  padding: 0px;
+  border: 0px;
+  outline: none;
+ }
  /* HTML5 display-role reset for older browsers */
  article, aside, details, figcaption, figure, 
  footer, header, hgroup, menu, nav, section {
