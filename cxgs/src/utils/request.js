@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-const BASEURL = 'http://examstar.com/interfaces'
+const BASEURL = 'https://demo201.jiudianlianxian.com/interfaces'
 const service = axios.create({
     baseURL: BASEURL,
     timeout: 10000,

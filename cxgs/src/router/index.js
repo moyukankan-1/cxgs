@@ -11,6 +11,31 @@ Vue.use(VueRouter)
     {
       path: '/login',
       component: () => import('../views/Login/index.vue')
+    },
+    {
+      path: '/home',
+      component: () => import('../views/Home/index.vue'),
+      meta: {
+        showFooter: true
+      }
+    },
+    {
+      path: '/history',
+      component: () => import('../views/History/index.vue'),
+      meta: {
+        showFooter: true
+      }
+    },
+    {
+      path: '/knowledge',
+      component: () => import('../views/Knowledge/index.vue'),
+      meta: {
+        showFooter: true
+      }
+    },
+    {
+      path: '/mine',
+      component: () => import('../views/Mine/index.vue'),
     }
   ]
 
