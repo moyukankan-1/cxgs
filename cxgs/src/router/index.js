@@ -17,7 +17,17 @@ Vue.use(VueRouter)
       component: () => import('../views/Home/index.vue'),
       meta: {
         showFooter: true
-      }
+      },
+      children: [
+        {
+          path: '/examineCary',
+          component: () => import('../views/Home/children/examineCarry/index.vue')
+        },
+        {
+          path: '/examineCheck',
+          component: () => import('../views/Home/children/examineCheck/index.vue')
+        },
+      ]
     },
     {
       path: '/history',

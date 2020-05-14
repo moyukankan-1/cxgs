@@ -8,9 +8,6 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
-    userId: cookie.get('userId'),
-    sessionId: cookie.get('sessionId'),
-    token: cookie.get('token')
   },
   mutations: {
    
@@ -19,9 +16,9 @@ export default new Vuex.Store({
     getLogin({commit},data) {
       return new Promise((resolve,reject) => {
         GetLogin(data).then(res => {
-          setUserId(res.data.userId)
-          setSessionId(res.data.sessionId)
-          setToken(res.data.token)
+          setUserId(res.data.data.userId)
+          setSessionId(res.data.data.sessionId)
+          setToken(res.data.data.token)
           resolve(res)
         }).catch(err => {
           reject(err)

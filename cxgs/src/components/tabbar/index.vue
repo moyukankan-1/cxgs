@@ -53,15 +53,16 @@ export default {
   display: flex;
   position: absolute;
   bottom: 0;
-  height: 60px;
+  height: 50px;
   width: 100%;
   padding-top: 10px;
   border-top: 1px solid rgba(0,0,0,.1);
+  background: #F7F7F7;
   li {
     flex: 1;
     img {
-      width: 50px;
-      height: 35px;
+      width: 42px;
+      height: 30px;
       margin: 0 auto;
     }
     div {
