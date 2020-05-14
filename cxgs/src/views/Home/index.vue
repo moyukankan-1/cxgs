@@ -21,6 +21,7 @@
         </div>
       </div>
     </scroll>
+    <router-view></router-view>
   </div>
 </template>
 <script>
@@ -114,9 +115,9 @@ export default {
     //点击tab栏目跳转
     const push = (id) => {
       if(id == 0) {
-        root.$router.push('/home/examineCarry')
+        root.$router.push('/examineCarry')
       }else if(id == 1) {
-        root.$router.push('/home/examineCheck')
+        root.$router.push('/examineCheck')
       }
     }
     /**
