@@ -2,11 +2,11 @@
   <div class="examine">
     <ul>
       <li v-for="item in list" :key="item.id">
-        <span>考</span>
-        <h3>{{item.title}}</h3>
+        <span v-if="kao">考</span>
+        <h3 :class="kao? 'left':''">{{item.title}}</h3>
         <div class="examine-num">共计{{item.num}}题</div>
         <div class="examine-title">考试时间：{{item.time}}</div>
-        <div class="examine-button">答题</div>
+        <div class="examine-button" @click="answer">答题</div>
       </li>
     </ul>
   </div>
@@ -14,9 +14,15 @@
 <script>
 import { reactive } from '@vue/composition-api'
 export default {
-  props: ['list'],
-  setup(props) {
-    
+  props: ['list','kao'],
+  setup(props, { root }) {
+    const answer = () => {
+      root.$router.push('/answer')
+    }
+
+    return {
+      answer
+    }
   }
 }
 </script>
@@ -39,7 +45,6 @@ export default {
         font-size: 12px;
       }
       h3 {
-        margin-left: 25px;
         height: 19px;
         line-height: 19px;
         font-weight: 600;
@@ -65,6 +70,9 @@ export default {
         border-radius: 25px;
         font-size: 14px;
       }
+    }
+    .left {
+      margin-left: 25px;
     }
   }
 }

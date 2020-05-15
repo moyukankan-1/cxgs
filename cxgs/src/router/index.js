@@ -41,6 +41,14 @@ Vue.use(VueRouter)
       path: '/examineCarry',
       component: () => import('../views/ExamineCarry/index.vue')
     },
+    {
+      path: '/answer',
+      component: () => import('../views/Answer/index.vue')
+    },
+    {
+      path: '/videoStudy',
+      component: () => import('../views/VideoStudy/index.vue')
+    }
   ]
 
 const router = new VueRouter({

@@ -1,14 +1,23 @@
 <template>
   <div class="header">
-    <svg-icon icon-class="back" v-show="show"></svg-icon>
+    <div @click="black">
+      <svg-icon icon-class="back" v-show="show"></svg-icon>
+    </div>
     <h3>{{title}}</h3> 
   </div>
 </template>
 <script>
 export default {
   props: ['title','show'],
-  setup(props) {
+  setup(props, { root }) {
+    const black = () => {
+      console.log(11)
+      root.$router.back()
+    }
 
+    return {
+      black
+    }
   }
 }
 </script>

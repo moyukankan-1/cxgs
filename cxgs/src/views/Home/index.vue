@@ -17,7 +17,7 @@
             <h3>待考试列表</h3>
             <span>全部></span>
           </div>
-          <examine-list :list="examineList.item"/>
+          <examine-list :list="examineList.item" :kao='true'/>
         </div>
       </div>
     </scroll>
@@ -97,7 +97,12 @@ export default {
           title: '2019-2020学年综合学习能力',
           num: 12,
           time: '06/10 08:30 - 06/14 08:30'
-        }
+        },
+        {
+          title: '新城分校区学年高二年级上学期',
+          num: 18,
+          time: '06/10 08:30 - 06/14 08:30'
+        },
       ]
     })
     //首页数据
@@ -117,7 +122,7 @@ export default {
       if(id == 0) {
         root.$router.push('/examineCarry')
       }else if(id == 1) {
-        root.$router.push('/examineCheck')
+        root.$router.push('/videoStudy')
       }
     }
     /**
