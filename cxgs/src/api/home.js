@@ -20,3 +20,13 @@ import service from '@/utils/request'
     data
   })
 }
+/**
+ * 视频学习--点击视频播放进入播放页
+ */
+export function GetPlayVideo(data) {
+  return service.request({
+    method: "post",
+    url: "Video/detail.html",
+    data
+  })
+}

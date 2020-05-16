@@ -48,6 +48,13 @@ Vue.use(VueRouter)
     {
       path: '/videoStudy',
       component: () => import('../views/VideoStudy/index.vue')
+<<<<<<< HEAD:cxgs/cxgs/src/router/index.js
+    },
+    {
+      path: '/playVideo',
+      component: () => import('../views/PlayVideo/index.vue')
+=======
+>>>>>>> fd2ab3f14dbaa434bdfd32f4c613208c26e71059:cxgs/src/router/index.js
     }
   ]
 

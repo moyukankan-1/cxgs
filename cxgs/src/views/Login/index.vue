@@ -69,7 +69,9 @@ export default {
         message.value = res.data.info
         //登录成功跳转home页面
         setTimeout(() => {
-          root.$router.push('/home')
+          if(message.value == '登录成功'){
+            root.$router.push('/home')
+          }
         },1000)
       })
     }

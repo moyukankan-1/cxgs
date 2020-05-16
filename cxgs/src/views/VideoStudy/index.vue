@@ -1,32 +1,31 @@
 <template>
   <div class="video-study">
     <header-top title='视频学习' :show='true'/>
-    <click-move :titles='titles.item'/>
+    <div class="study-container">
+      <ul>
+        <li v-for="item in videoList.item" :key="item.id" @click="playVideo(item.videoId)">
+          <img :src="'https://demo201.jiudianlianxian.com' + item.image">
+          <p>{{item.title}}</p>
+          <span>{{item.time}}</span>
+        </li>
+      </ul>
+    </div>
   </div>
 </template>
 <script>
 import headerTop from '@/components/header/index.vue'
-import clickMove from '@/components/clickMove/index.vue'
-import { reactive, onMounted } from '@vue/composition-api'
+import { reactive, onMounted, computed } from '@vue/composition-api'
 import { GetVideoStudyMain } from '@/api/home'
 import { getUserId, getSessionId, getToken } from '@/utils/app'
+import { format } from '@/utils/timeChange'
 export default {
   components: {
-    headerTop,
-    clickMove
+    headerTop
   },
-  setup(props) {
-    const titles = reactive({
-      item: [
-        {
-          id: 0,
-          title: '可学习'
-        },
-        {
-          id: 1,
-          title: '已学习'
-        }
-      ]
+  setup(props,{ root }) {
+    //视频数据
+    const videoList = reactive({
+      item: []
     })
     //获取视频列表
     const getVideoStudyMain = () => {
@@ -38,21 +37,52 @@ export default {
         videoNumber: 3
       }
       GetVideoStudyMain(requestData).then(res => {
-        console.log(res)
+        videoList.item = res.data.data.videoList
       }).catch(err => {})
+    }
+    //点击视频进入播放页
+    const playVideo = (id) => {
+      root.$router.push({
+        path: '/playVideo',
+        query: {
+          videoId: id
+        }
+      })
     }
 
     onMounted(() => {
       getVideoStudyMain()
     })
-
-
     return {
-      titles,
-      getVideoStudyMain
+      getVideoStudyMain,
+      videoList,
+      playVideo
     }
   }
 }
 </script>
 <style lang="scss" scoped>
+.study-container {
+  padding: 20px;
+  ul {
+    li {
+      margin-bottom: 20px;
+      img {
+        width: 100%;
+        height: 200px;
+        border-radius: 10px;
+      }
+      p {
+        margin: 10px 0;
+      }
+      span {
+        background: #EEEEEE;
+        padding: 2px 7px;
+        border-radius: 25px;
+        font-size: 14px;
+        color: #ABABAB;
+      }
+    }
+  }
+}
 </style>
