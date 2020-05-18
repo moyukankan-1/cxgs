@@ -30,3 +30,33 @@ export function GetPlayVideo(data) {
     data
   })
 }
+/**
+ * 练习模式 -- 栏目页面进入
+ */
+export function GetPractice(data) {
+  return service.request({
+    method: "post",
+    url: "Practice/index.html",
+    data
+  })
+}
+/**
+ * 练习模式 -- 点击开始练习进入考试
+ */
+export function GetJoin(data) {
+  return service.request({
+    method: "post",
+    url: "Practice/join.html",
+    data
+  })
+}
+/**
+ * 练习模式 -- 点击下一题
+ */
+export function GetAnswer(data) {
+  return service.request({
+    method: "post",
+    url: "Practice/answer.html",
+    data
+  })
+}

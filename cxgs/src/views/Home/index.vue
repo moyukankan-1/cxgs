@@ -123,6 +123,8 @@ export default {
         root.$router.push('/examineCarry')
       }else if(id == 1) {
         root.$router.push('/videoStudy')
+      }else if(id == 3) {
+        root.$router.push('/practice')
       }
     }
     /**
