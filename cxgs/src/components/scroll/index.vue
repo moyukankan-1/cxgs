@@ -10,14 +10,17 @@
   import BScroll from "better-scroll"
 import { onMounted } from '@vue/composition-api'
   export default {
-    props: ['pullUpLoad'],
-    setup(props, { root, refs }) {
+    setup(props, { root, refs, emit }) {
       scroll: null
 
       onMounted(() => {
         root.scroll = new BScroll(refs.wrapper,{
           click: true,
-          pullUpLoad: root.pullUpLoad
+          pullUpLoad: true
+        })
+
+        root.scroll.on('pullingUp',() => {
+          emit('pullUp')
         })
       })
 

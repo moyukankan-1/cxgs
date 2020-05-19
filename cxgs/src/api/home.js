@@ -60,3 +60,13 @@ export function GetAnswer(data) {
     data
   })
 }
+/**
+ * 历史考试--栏目页面进入
+ */
+export function GetHistory(data) {
+  return service.request({
+    method: "post",
+    url: "History/index.html",
+    data
+  })
+}

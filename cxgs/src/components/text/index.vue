@@ -9,9 +9,9 @@
       </li>
     </ul>
     <div class="submit">
-      <div>提交</div>
+      <button>提交</button>
       <div>{{time}}s</div>
-      <div @click="next">下一题</div>
+      <button @click="next" :disabled='end.vaue'>下一题</button>
     </div>
     <dia-log :text="message" v-show="dialogShow" />
   </div>
@@ -34,6 +34,7 @@ export default {
     const message = ref('')
     const time = ref(30)
     const timer = ref('')
+    const end = ref(false)
 
     const tabItem = (index) => {
       tabIndex.value = index
@@ -41,6 +42,9 @@ export default {
       shitiId.value = props.textList.shitiId
     }
     const next = () => {
+      if(!chooseItem.value) {
+        return 
+      }
       clearInterval(timer.value)
       shitiId.value++
       let requestData = {
@@ -74,6 +78,11 @@ export default {
         shitiId: shitiId.value
       }
       GetJoin(requestData).then(res => {
+        if(res.data.data.isEnd) {
+          message.value = '当前为最后一题'
+          end.value = true
+          return 
+        }
         props.textList = res.data.data
         //清空选项
         tabIndex.value = -1
@@ -99,6 +108,8 @@ export default {
     }
 
     onMounted(() => {
+      //页面挂载完成
+      end.value = false
       age()
     })
     //页面退出-清空定时器
@@ -113,7 +124,8 @@ export default {
       message,
       time,
       timer,
-      next
+      next,
+      end
     }
   }
 }
@@ -170,17 +182,20 @@ export default {
     bottom: 20px;
     width: calc(100% - 40px);
     justify-content: space-between;
-    div {
+    button:first-child {
       padding: 7px 15px;
       border: 1px solid #DFDFDF;
       border-radius: 20px;
       color: #A7A7A7;
     }
-    div:nth-child(2) {
+    div {
+      line-height: 35px;
       border: none;
       color: #000;
     }
-    div:last-child {
+    button:last-child  {
+      padding: 7px 15px;
+      border-radius: 20px;
       color: #fff;
       background: #3FB3FD;
       border: none;

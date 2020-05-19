@@ -1,11 +1,13 @@
 <template>
   <div class="join">
+    <toolcip />
     <header-top title='正在考试' :show='true'/>
     <text-list :textList='joinList.item' />
   </div>
 </template>
 <script>
 import headerTop from '@/components/header/index.vue'
+import Toolcip from '@/components/toolcip/index.vue'
 import { GetJoin } from '@/api/home'
 import { getUserId, getSessionId, getToken } from '@/utils/app'
 import { ref, onMounted, reactive } from '@vue/composition-api'
@@ -13,7 +15,8 @@ import TextList from '@/components/text/index.vue'
 export default {
   components: {
     TextList,
-    headerTop
+    headerTop,
+    Toolcip
   },
   setup(props,{ root }) {
     const shitiId = ref(0)
@@ -32,7 +35,6 @@ export default {
       }
       GetJoin(requestData).then(res => {
         joinList.item = res.data.data
-        console.log(joinList.item)
       }).catch(err => {})
     }
     onMounted(() => {
