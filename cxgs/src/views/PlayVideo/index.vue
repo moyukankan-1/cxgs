@@ -7,7 +7,7 @@
     ></video-player>
     <div class="font">
       <span>{{play.title}}</span>
-      <a href="javascript:;">{{play.time}}</a>
+      <a href="javascript:;">{{play.time | times}}</a>
     </div>
   </div>
 </template>
@@ -17,6 +17,7 @@ import { videoPlayer } from 'vue-video-player'
 import 'video.js/dist/video-js.css'
 import { getUserId, getSessionId, getToken } from '@/utils/app'
 import { GetPlayVideo } from '@/api/home'
+import { format } from '@/utils/timeChange'
   export default {
     components: {
       videoPlayer
@@ -45,6 +46,11 @@ import { GetPlayVideo } from '@/api/home'
             fullscreenToggle: true  //全屏按钮
           }
         }
+      }
+    },
+    filters: {
+      times(time) {
+        return format(time)
       }
     },
     mounted() {

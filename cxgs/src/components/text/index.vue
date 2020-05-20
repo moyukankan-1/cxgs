@@ -1,17 +1,23 @@
 <template>
   <div class="text">
-    <span>[{{textList.type}}]</span>
+    <span>[{{textList.type | types}}]</span>
     <h4>{{textList.title}}</h4>
-    <ul>
+    <ul v-if="textList.type == 1 || textList.type == 3">
       <li v-for="(item,index) in textList.items" :key="item.id" @click="tabItem(index)">
         <div :class="tabIndex == index? 'active':''">{{item.chooseItem}}</div>
+        <div>{{item.chooseDesc}}</div>
+      </li>
+    </ul>
+    <ul v-if="textList.type == 2">
+      <li v-for="(item,index) in textList.items" :key="item.id" @click="choice(index)">
+        <div ref="div">{{item.chooseItem}}</div>
         <div>{{item.chooseDesc}}</div>
       </li>
     </ul>
     <div class="submit">
       <button>提交</button>
       <div>{{time}}s</div>
-      <button @click="next" :disabled='end.vaue'>下一题</button>
+      <button @click="next" :disabled='this.end'>下一题</button>
     </div>
     <dia-log :text="message" v-show="dialogShow" />
   </div>
@@ -34,21 +40,47 @@ export default {
       message: '',
       time: 30,
       timer: '',
-      end: false
+      end: false,
+      chooseNumStr: []
+    }
+  },
+  filters: {
+    types(type) {
+      if(type == 1) {
+        return '单选题'
+      }else if(type == 2) {
+        return '多选题'
+      }else if(type == 3) {
+        return '判断题'
+      }
     }
   },
   methods: {
+    //单选题
     tabItem(index) {
       this.tabIndex = index
       this.chooseItem = this.textList.items[index].chooseItem
       this.shitiId = this.textList.shitiId
+    },
+    //多选题
+    choice(index) {
+      if(this.$refs.div[index].className.length <= 0) {
+        this.$refs.div[index].className = 'active'
+
+        for (let i = index; i < this.$refs.div.length; i++) {
+          if(this.$refs.div[i].className.length > 0){
+            this.chooseItem += this.$refs.div[i].innerText.substring(0,1)
+          }
+        }
+      }else {
+        this.$refs.div[index].className = ''
+      }
     },
     next() {
       if(!this.chooseItem) {
         return 
       }
       clearInterval(this.timer)
-      this.shitiId++
       let requestData = {
         userId: getUserId(),
         sessionId: getSessionId(),
@@ -57,6 +89,7 @@ export default {
         answer: this.chooseItem
       }
       GetAnswer(requestData).then(res => {
+        this.shitiId = res.data.data.shitiId
         this.dialogShow = true
         if(res.data.data.isTrue) {
           this.message = '正确！'
@@ -66,6 +99,10 @@ export default {
         setTimeout(() => {
           this.dialogShow = false
           this.getJoin()
+          //点击下一题清空当前选项
+          this.$refs.div.forEach(item => {
+          item.className = ''
+      });
         },1000)
       }).catch(err => {})
     },
@@ -109,7 +146,7 @@ export default {
   },
   mounted () {
     this.end = false
-    this.age()
+    this.getJoin()
   },
   //页面退出清空定时器
   destroyed () {

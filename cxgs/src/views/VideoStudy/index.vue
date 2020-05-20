@@ -6,7 +6,7 @@
         <li v-for="item in videoList.item" :key="item.id" @click="playVideo(item.videoId)">
           <img :src="'https://demo201.jiudianlianxian.com' + item.image">
           <p>{{item.title}}</p>
-          <span>{{item.time}}</span>
+          <span>{{item.time | times}}</span>
         </li>
       </ul>
     </div>
@@ -27,6 +27,11 @@ export default {
       videoList: {
         item: []
       }
+    }
+  },
+  filters: {
+    times(time) {
+      return format(time)
     }
   },
   methods: {

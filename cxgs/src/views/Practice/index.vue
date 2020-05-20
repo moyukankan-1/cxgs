@@ -38,10 +38,10 @@ export default {
             type: 2
           },
           {
-            id: 3,
+            id: 2,
             name: '判断题',
             type: 3
-          },
+          }
         ]
       },
       idx: 0,
