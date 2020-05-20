@@ -6,8 +6,10 @@
 <script>
 export default {
   props: ['text'],
-  setup(props) {
-
+  data() {
+    return {
+      
+    }
   }
 }
 </script>

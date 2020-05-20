@@ -12,16 +12,16 @@
   </div>
 </template>
 <script>
-import { reactive } from '@vue/composition-api'
 export default {
   props: ['list','kao'],
-  setup(props, { root }) {
-    const answer = () => {
-      root.$router.push('/answer')
-    }
-
+  data() {
     return {
-      answer
+      
+    }
+  },
+  methods: {
+    answer() {
+      this.$router.push('/answer')
     }
   }
 }

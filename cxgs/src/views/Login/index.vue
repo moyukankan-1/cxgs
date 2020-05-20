@@ -31,56 +31,49 @@ export default {
   components: {
     diaLog
   },
-  setup(props, { root }) {
-    const loginList = reactive({
-      username: '',
-      password: ''
-    })
-    const message = ref('')
-    const dialogShow = ref(false)
-
+  data() {
+    return {
+      loginList: { usernam: '', password: ''},
+      message: '',
+      dialogShow: false
+    }
+  },
+  methods: {
     /**
      * 点击登录
      */
-    const submit = () => {
+    submit() {
       //显示提示框
-      dialogShow.value = true
+      this.dialogShow = true
       setTimeout(() => {
-        dialogShow.value =false
+        this.dialogShow =false
       },1000)
-      login()
-    }
-    
+      this.login()
+    },
+
     /**
      * 登录接口
      */
-    const login = () => {
+    login() {
       let data = {
         userId: 'x',
         sessionId: 'x',
-        token: root.$md5(root.sessionId + root.userId + 'jiudianlianxian' + '20200513'),
-        username: loginList.username,
-        password: root.$md5(loginList.password)
+        token: this.$md5(this.sessionId + this.userId + 'jiudianlianxian' + '20200513'),
+        username: this.loginList.username,
+        password: this.$md5(this.loginList.password)
       }
-      root.$store.dispatch('getLogin', data).then(res => {
+      this.$store.dispatch('getLogin', data).then(res => {
         //登录成功保存用户名和密码
         setUsername(data.username)
         setPassword(data.password)
-        message.value = res.data.info
+        this.message = res.data.info
         //登录成功跳转home页面
         setTimeout(() => {
-          if(message.value == '登录成功'){
-            root.$router.push('/home')
+          if(this.message == '登录成功'){
+            this.$router.push('/home')
           }
         },1000)
       })
-    }
-
-    return {
-      dialogShow,
-      message,
-      loginList,
-      submit
     }
   }
 }

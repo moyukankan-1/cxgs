@@ -32,18 +32,18 @@
 </template>
 <script>
 import tabbarItem from './tabbarItem.vue'
-import { ref, computed } from '@vue/composition-api'
 export default {
   components: {
     tabbarItem
   },
-  setup(props,{ root }) {
-    const isActive = computed(() => {
-      return root.$route.path.indexOf() !== -1
-    })
-
+  data() {
     return {
-      isActive
+
+    }
+  },
+  computed:{
+    isActive() {
+      return this.$route.path.indexOf() !== -1
     }
   }
 }

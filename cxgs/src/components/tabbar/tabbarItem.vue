@@ -6,24 +6,24 @@
   </div>
 </template>
 <script>
-import { computed } from '@vue/composition-api'
 export default {
   props: ['link'],
-  setup(props, { root }) {
-    const isActive = computed(() => {
-      return root.$route.path.indexOf(props.link) !== -1
-    })
-    const activeStyle = computed(() => {
-      return root.isActive ? {color: root.activeColor} : {}
-    })
-    const itemClick = () => {
-      root.$router.push(props.link)
-    }
-
+  data() {
     return {
-      isActive,
-      activeStyle,
-      itemClick
+      
+    }
+  },
+  computed:{
+    isActive() {
+      return this.$route.path.indexOf(this.link) !== -1
+    },
+    activeStyle() {
+      return this.isActive ? {color: this.activeColor} : {}
+    }
+  },
+  methods: {
+    itemClick() {
+      this.$router.push(this.link)
     }
   }
 }

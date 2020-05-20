@@ -9,14 +9,14 @@
 <script>
 export default {
   props: ['title','show'],
-  setup(props, { root }) {
-    const black = () => {
-      console.log(11)
-      root.$router.back()
-    }
-
+  data() {
     return {
-      black
+
+    }
+  },
+  methods: {
+    black() {
+      this.$router.back()
     }
   }
 }

@@ -9,25 +9,22 @@
   </div>
 </template>
 <script>
-import { ref } from '@vue/composition-api'
 export default {
   props: ['titles'],
-  setup(props, { emit }) {
-    const idx = ref(0)
-
-    const activeClick = (id) => {
-      idx.value = id
+  data() {
+    return {
+      idx: 0
+    }
+  },
+  methods: {
+    activeClick(id) {
+      this.idx = id
       if(id == 0) {
-        emit('already1')
+        this.$emit('already1')
       }else if(id == 1) {
-        emit('already2')
+        this.$emit('already2')
       }
       
-    }
-
-    return {
-      idx,
-      activeClick
     }
   }
 }

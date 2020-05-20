@@ -20,23 +20,20 @@
   </div>
 </template>
 <script>
-import { ref } from '@vue/composition-api'
 export default {
-  setup(props, { root }) {
-    const show = ref(true)
-    //进入
-    const action = () => {
-      show.value = false
-    }
-    //退出
-    const black = () => {
-      root.$router.back()
-    }
-
+  data() {
     return {
-      show,
-      action,
-      black
+      show: true
+    }
+  },
+  methods: {
+    //进入
+    action() {
+      this.show = false
+    },
+    //退出
+    black() {
+      this.$router.back()
     }
   }
 }

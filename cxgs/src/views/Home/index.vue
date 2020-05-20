@@ -26,7 +26,6 @@
 </template>
 <script>
 import headerTop from '@/components/header/index.vue'
-import { ref, onMounted, reactive } from '@vue/composition-api'
 import { GetHome } from '@/api/home'
 import { getUserId, getSessionId, getToken } from '@/utils/app'
 import examineList from '@/components/examine/index.vue'
@@ -37,109 +36,103 @@ export default {
     examineList,
     Scroll
   },
-  setup(props, { root }) {
-    const show = ref(false)
-    //首页数据
-    const homeList = reactive({
-      item: {}
-    })
-    //tab选项栏目数据
-    const tabList = reactive({
-      item: [
-        {
-          id: 0,
-          svg: 'write',
-          test: '考试',
-          type: 0
-        },
-        {
-          id: 1,
-          svg: 'video',
-          test: '视频学习',
-          type: 1
-        },
-        {
-          id: 2,
-          svg: 'rise',
-          test: '考试查看'
-        },
-        {
-          id: 3,
-          svg: 'exercise',
-          test: '练习模式'
-        },
-        {
-          id: 4,
-          svg: 'run',
-          test: '闯关模式'
-        }
-      ]
-    })
-    //待考试列表数据
-    const examineList = reactive({
-      item: [
-        {
-          title: '2019-2020学年行政职业能力',
-          num: 12,
-          time: '06/10 08:30 - 06/14 08:30'
-        },
-        {
-          title: '2019-2020学年公共基础知识',
-          num: 16,
-          time: '06/10 08:30 - 06/14 08:30'
-        },
-        {
-          title: '2019-2020行政职业能力+交通基础知识',
-          num: 12,
-          time: '06/10 08:30 - 06/14 08:30'
-        },
-        {
-          title: '2019-2020学年综合学习能力',
-          num: 12,
-          time: '06/10 08:30 - 06/14 08:30'
-        },
-        {
-          title: '新城分校区学年高二年级上学期',
-          num: 18,
-          time: '06/10 08:30 - 06/14 08:30'
-        },
-      ]
-    })
-    //首页数据
-    const getHome = () => {
+  data() {
+    return {
+      show: false,
+      //首页数据
+      homeList: {
+        item: {}
+      },
+      tabList: {
+        item: [
+          {
+            id: 0,
+            svg: 'write',
+            test: '考试',
+            type: 0
+          },
+          {
+            id: 1,
+            svg: 'video',
+            test: '视频学习',
+            type: 1
+          },
+          {
+            id: 2,
+            svg: 'rise',
+            test: '考试查看'
+          },
+          {
+            id: 3,
+            svg: 'exercise',
+            test: '练习模式'
+          },
+          {
+            id: 4,
+            svg: 'run',
+            test: '闯关模式'
+          }
+        ]
+      },
+      examineList: {
+        item: [
+          {
+            title: '2019-2020学年行政职业能力',
+            num: 12,
+            time: '06/10 08:30 - 06/14 08:30'
+          },
+          {
+            title: '2019-2020学年公共基础知识',
+            num: 16,
+            time: '06/10 08:30 - 06/14 08:30'
+          },
+          {
+            title: '2019-2020行政职业能力+交通基础知识',
+            num: 12,
+            time: '06/10 08:30 - 06/14 08:30'
+          },
+          {
+            title: '2019-2020学年综合学习能力',
+            num: 12,
+            time: '06/10 08:30 - 06/14 08:30'
+          },
+          {
+            title: '新城分校区学年高二年级上学期',
+            num: 18,
+            time: '06/10 08:30 - 06/14 08:30'
+          }
+        ]
+      }
+    }
+  },
+  methods: {
+     //首页数据
+    getHome() {
       const data = {
         userId: getUserId(),
         sessionId: getSessionId(),
-        token: getToken(),
+        token: getToken()
       }
       GetHome(data).then(res => {
-        homeList.item = res.data.data
-        console.log(homeList.item)
+        this.homeList.item = res.data.data
       }).catch(err => {})
-    }
+    },
     //点击tab栏目跳转
-    const push = (id) => {
+    push(id) {
       if(id == 0) {
-        root.$router.push('/examineCarry')
+        this.$router.push('/examineCarry')
       }else if(id == 1) {
-        root.$router.push('/videoStudy')
+        this.$router.push('/videoStudy')
       }else if(id == 3) {
-        root.$router.push('/practice')
+        this.$router.push('/practice')
       }
     }
-    /**
-     * 挂载完成生命周期
-     */
-    onMounted(() => {
-      getHome()
-    })
-    return {
-      show,
-      homeList,
-      tabList,
-      examineList,
-      push
-    }
+  },
+  /**
+  * 挂载完成生命周期
+  */
+  mounted() {
+    this.getHome()
   }
 }
 </script>

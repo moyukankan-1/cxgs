@@ -17,7 +17,6 @@
   </div>
 </template>
 <script>
-import { onMounted, onUnmounted, ref } from '@vue/composition-api'
 import { GetAnswer, GetJoin } from '@/api/home'
 import { getUserId, getSessionId, getToken } from '@/utils/app'
 import diaLog from '@/components/dialog/index.vue'
@@ -26,107 +25,95 @@ export default {
   components: {
     diaLog
   },
-  setup(props, { root }) {
-    const tabIndex = ref(-1)
-    const shitiId = ref(0)
-    const chooseItem = ref('')
-    const dialogShow = ref(false)
-    const message = ref('')
-    const time = ref(30)
-    const timer = ref('')
-    const end = ref(false)
-
-    const tabItem = (index) => {
-      tabIndex.value = index
-      chooseItem.value = props.textList.items[index].chooseItem
-      shitiId.value = props.textList.shitiId
+  data() {
+    return {
+      tabIndex: -1,
+      shitiId: 0,
+      chooseItem: '',
+      dialogShow: false,
+      message: '',
+      time: 30,
+      timer: '',
+      end: false
     }
-    const next = () => {
-      if(!chooseItem.value) {
+  },
+  methods: {
+    tabItem(index) {
+      this.tabIndex = index
+      this.chooseItem = this.textList.items[index].chooseItem
+      this.shitiId = this.textList.shitiId
+    },
+    next() {
+      if(!this.chooseItem) {
         return 
       }
-      clearInterval(timer.value)
-      shitiId.value++
+      clearInterval(this.timer)
+      this.shitiId++
       let requestData = {
         userId: getUserId(),
         sessionId: getSessionId(),
         token: getToken(),
-        shitiId: shitiId.value,
-        answer: chooseItem.value
+        shitiId: this.shitiId,
+        answer: this.chooseItem
       }
       GetAnswer(requestData).then(res => {
-        dialogShow.value = true
+        this.dialogShow = true
         if(res.data.data.isTrue) {
-          message.value = '正确！'
+          this.message = '正确！'
         }else {
-          message.value = '错误！'
+          this.message = '错误！'
         }
         setTimeout(() => {
-          dialogShow.value = false
-          getJoin()
+          this.dialogShow = false
+          this.getJoin()
         },1000)
       }).catch(err => {})
-    }
-
-    const getJoin = () => {
+    },
+    getJoin() {
       let requestData = {
         userId: getUserId(),
         sessionId: getSessionId(),
         token: getToken(),
-        itemId: root.$route.query.itemId,
-        shitiType: root.$route.query.shitiType,
-        shitiId: shitiId.value
+        itemId: this.$route.query.itemId,
+        shitiType: this.$route.query.shitiType,
+        shitiId: this.shitiId
       }
       GetJoin(requestData).then(res => {
         if(res.data.data.isEnd) {
-          message.value = '当前为最后一题'
-          end.value = true
+          this.message = '当前为最后一题'
+          this.end = true
           return 
         }
-        props.textList = res.data.data
+        this.textList = res.data.data
         //清空选项
-        tabIndex.value = -1
-        message.value = '',
-        time.value = 60
-        age()
+        this.tabIndex = -1
+        this.message = '',
+        this.time = 60
+        this.age()
       }).catch(err => {})
-    }
-
-    const age = () => {
-      timer.value = setInterval(() => {
-        time.value--
-        if(time.value == 0) {
-          message.value = '超时！'
-          clearInterval(timer.value)
-          dialogShow.value = true
+    },
+    age() {
+      this.timer = setInterval(() => {
+        this.time--
+        if(this.time == 0) {
+          this.message = '超时！'
+          clearInterval(this.timer)
+          this.dialogShow = true
           setTimeout(() => {
-            dialogShow.value = false
-            getJoin()
+            this.dialogShow = false
+            this.getJoin()
           },1000)
         }
       },1000)
     }
-
-    onMounted(() => {
-      //页面挂载完成
-      end.value = false
-      age()
-    })
-    //页面退出-清空定时器
-    onUnmounted(() => {
-      clearInterval(timer.value)
-    })
-    return {
-      tabIndex,
-      tabItem,
-      chooseItem,
-      dialogShow,
-      message,
-      time,
-      timer,
-      next,
-      end
-    }
+  },
+  mounted () {
+    this.end = false
+    this.age()
+  },
+  //页面退出清空定时器
+  destroyed () {
+    clearInterval(this.timer)
   }
 }
 </script>

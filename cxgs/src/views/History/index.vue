@@ -41,7 +41,6 @@ import Scroll from '@/components/scroll/index.vue'
 import diaLog from '@/components/dialog/index.vue'
 import { GetHistory } from '@/api/home'
 import { getUserId, getSessionId, getToken } from '@/utils/app'
-import { onMounted, reactive, ref } from '@vue/composition-api'
 export default {
   components: {
     headerTop,
@@ -49,67 +48,59 @@ export default {
     Scroll,
     diaLog
   },
-  setup(props) {
-    const titles = reactive({
-      item: [
-        {
-          id: 0,
-          title: '练习考试'
-        },
-        {
-          id: 1,
-          title: '闯关模式'
-        },
-      ]
-    })
-    const history = reactive({
-      item: []
-    })
-    const type = ref(1)
-    const message = ref('')
-    const dialogShow = ref(false)
-    const getHistory = () => {
+  data() {
+    return {
+      titles: {
+        item: [
+          {
+            id: 0,
+            title: '练习考试'
+          },
+          {
+            id: 1,
+            title: '闯关模式'
+          },
+        ]
+      },
+      history: {
+        item: []
+      },
+      type: 1,
+      message: '',
+      dialogShow: false
+    }
+  },
+  methods: {
+    getHistory() {
       let requestData = {
         userId: getUserId(),
         sessionId: getSessionId(),
         token: getToken(),
-        historyType: type.value,
+        historyType: this.type,
         currentPage: 1,
         examNumber: 10
       }
       GetHistory(requestData).then(res => {
-        history.item = res.data.data.examList
+        this.history.item = res.data.data.examList
       }).catch(err => {})
-    }
+    },
     //练习考试
-    const already1 = () => {
-      type.value = 1
-      getHistory()
-    }
+    already1() {
+      this.type = 1
+      this.getHistory()
+    },
     //闯关模式
-    const already2 = () => {
-      type.value = 2
-      getHistory()
-    }
+    already2() {
+      this.type = 2
+      this.getHistory()
+    },
     //上拉加载下一页
-    const pullUp = () => {
+    pullUp() {
       console.log(11)
     }
-
-    onMounted(() => {
-      getHistory()
-    })
-
-    return {
-      titles,
-      history,
-      type,
-      already1,
-      already2,
-      pullUp,
-      message,
-      dialogShow
-    }
+  },
+  mounted() {
+    this.getHistory()
   }
 }
 </script>

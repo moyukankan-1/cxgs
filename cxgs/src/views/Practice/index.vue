@@ -16,84 +16,71 @@
 import headerTop from '@/components/header/index.vue'
 import { GetPractice } from '@/api/home'
 import { getUserId, getSessionId, getToken } from '@/utils/app'
-import { onMounted, reactive, ref } from '@vue/composition-api'
 export default {
   components: {
     headerTop
   },
-  setup(props,{ root }){
-    const itemList = reactive({
-      item: []
-    })
-    const type = reactive({
-      item: [
-        {
-          id: 0,
-          name: '单选题',
-          type: 1
-        },
-        {
-          id: 1,
-          name: '多选题',
-          type: 2
-        },
-        {
-          id: 3,
-          name: '判断题',
-          type: 3
-        },
-      ]
-    })
-    const idx = ref(0)
-    const typeIdx = ref(0)
-    const itemId = ref(2010381)
-    const shitiType = ref(1)
-
-    const getPractice = () => {
+  data() {
+    return {
+      itemList: {
+        item: []
+      },
+      type: {
+        item: [
+          {
+            id: 0,
+            name: '单选题',
+            type: 1
+          },
+          {
+            id: 1,
+            name: '多选题',
+            type: 2
+          },
+          {
+            id: 3,
+            name: '判断题',
+            type: 3
+          },
+        ]
+      },
+      idx: 0,
+      typeIdx: 0,
+      itemId: 2010381,
+      shitiType: 1,
+    }
+  },
+  methods: {
+    getPractice() {
       let requestData = {
         userId: getUserId(),
         sessionId: getSessionId(),
         token: getToken()
       }
       GetPractice(requestData).then(res => {
-        itemList.item = res.data.data.itemList
+        this.itemList.item = res.data.data.itemList
       }).catch(err => {})
-    }
-
-    const activeIdx = (index) => {
-      idx.value = index
-      itemId.value = itemList.item[index].itemId
-    }
-    const activeTypeIdx = (index) => {
-      typeIdx.value = index
-      shitiType.value = type.item[index].type
-    }
-    onMounted(() => {
-      getPractice()
-    })
-
-    const join = () => {
-      root.$router.push({
+    },
+    activeIdx(index) {
+      this.idx = index
+      this.itemId = this.itemList.item[index].itemId
+    },
+    activeTypeIdx(index) {
+      this.typeIdx = index
+      this.shitiType = this.type.item[index].type
+    },
+    join() {
+      this.$router.push({
         path: '/join',
         query: {
-          itemId: itemId.value,
-          shitiType: shitiType.value
+          itemId: this.itemId,
+          shitiType: this.shitiType
         }
       })
     }
-
-    return {
-      idx,
-      typeIdx,
-      getPractice,
-      itemList,
-      type,
-      activeIdx,
-      activeTypeIdx,
-      itemId,
-      shitiType,
-      join
-    }
+  },
+  mounted() {
+    this.getPractice()
   }
 }
 </script>

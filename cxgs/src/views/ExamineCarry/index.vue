@@ -17,7 +17,6 @@ import headerTop from '@/components/header/index.vue'
 import clickMove from '@/components/clickMove/index.vue'
 import examineList from '@/components/examine/index.vue'
 import Scroll from '@/components/scroll/index.vue'
-import { reactive, ref } from '@vue/composition-api'
 export default {
   components: {
     Toolcip,
@@ -26,21 +25,22 @@ export default {
     examineList,
     Scroll
   },
-  setup(props) {
-    const titles = reactive({
-      item: [
-        {
-          id: 0,
-          title: "可考试"
-        },
-        {
-          id: 1,
-          title: "已考试"
-        }
-      ]
-    })
-    const examineList = reactive({
-      item: [
+  data() {
+    return {
+      titles: {
+        item: [
+          {
+            id: 0,
+            title: "可考试"
+          },
+          {
+            id: 1,
+            title: "已考试"
+          }
+        ]
+      },
+      examineList: {
+        item: [
         {
           title: '2019-2020学年行政职业能力',
           num: 12,
@@ -76,21 +76,17 @@ export default {
           num: 12,
           time: '06/10 08:30 - 06/14 08:30'
         },
-      ]
-    })
-    const hidden = ref(true)
-    const already1 = () => {
-      hidden.value = true
+        ]
+      },
+      hidden: true
     }
-    const already2 = () => {
-      hidden.value = false
-    }
-    return {
-      titles,
-      examineList,
-      hidden,
-      already1,
-      already2
+  },
+  methods: {
+    already1() {
+      this.hidden = true
+    },
+    already2() {
+      this.hidden = false
     }
   }
 }

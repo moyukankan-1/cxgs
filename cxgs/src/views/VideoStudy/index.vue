@@ -14,7 +14,6 @@
 </template>
 <script>
 import headerTop from '@/components/header/index.vue'
-import { reactive, onMounted, computed } from '@vue/composition-api'
 import { GetVideoStudyMain } from '@/api/home'
 import { getUserId, getSessionId, getToken } from '@/utils/app'
 import { format } from '@/utils/timeChange'
@@ -22,13 +21,17 @@ export default {
   components: {
     headerTop
   },
-  setup(props,{ root }) {
-    //视频数据
-    const videoList = reactive({
-      item: []
-    })
+  data() {
+    return {
+      //视频数据
+      videoList: {
+        item: []
+      }
+    }
+  },
+  methods: {
     //获取视频列表
-    const getVideoStudyMain = () => {
+    getVideoStudyMain() {
       let requestData = {
         userId: getUserId(),
         sessionId: getSessionId(),
@@ -37,27 +40,21 @@ export default {
         videoNumber: 3
       }
       GetVideoStudyMain(requestData).then(res => {
-        videoList.item = res.data.data.videoList
+        this.videoList.item = res.data.data.videoList
       }).catch(err => {})
-    }
+    },
     //点击视频进入播放页
-    const playVideo = (id) => {
-      root.$router.push({
+    playVideo(id) {
+      this.$router.push({
         path: '/playVideo',
         query: {
           videoId: id
         }
       })
     }
-
-    onMounted(() => {
-      getVideoStudyMain()
-    })
-    return {
-      getVideoStudyMain,
-      videoList,
-      playVideo
-    }
+  },
+  mounted() {
+    this.getVideoStudyMain()
   }
 }
 </script>

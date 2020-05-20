@@ -10,8 +10,10 @@ export default {
   components: {
     headerTop
   },
-  setup(props) {
-    
+  data() {
+    return {
+      
+    }
   }
 }
 </script>

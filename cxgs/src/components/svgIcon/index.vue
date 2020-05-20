@@ -4,21 +4,23 @@
   </svg>
 </template>
 <script>
-import { ref, computed, onMounted } from '@vue/composition-api'
 export default {
   props: ['iconClass','className'],
-  setup(props) {
-    const iconName = computed(() => `#icon-${props.iconClass}`)
-    const svgClass = computed(() => {
-      if(props.className) {
-        return `svg-icon ${props.className}`
+  data() {
+    return {
+
+    }
+  },
+  computed: {
+    iconName() {
+      return `#icon-${this.iconClass}`
+    },
+    svgClass() {
+      if(this.className) {
+        return `svg-icon ${this.className}`
       }else {
         return `svg-icon`
       }
-    })
-    return {
-      iconName,
-      svgClass
     }
   }
 }
