@@ -1,21 +1,15 @@
 <template>
   <div class="join">
-    <toolcip />
-    <header-top title='正在考试' :show='true'/>
     <text-list :textList='joinList.item' />
   </div>
 </template>
 <script>
-import headerTop from '@/components/header/index.vue'
-import Toolcip from '@/components/toolcip/index.vue'
 import { GetJoin } from '@/api/home'
 import { getUserId, getSessionId, getToken } from '@/utils/app'
 import TextList from '@/components/text/index.vue'
 export default {
   components: {
-    TextList,
-    headerTop,
-    Toolcip
+    TextList
   },
   data() {
     return {

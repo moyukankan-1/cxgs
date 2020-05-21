@@ -1,34 +1,42 @@
 <template>
-  <div class="text">
-    <span>[{{textList.type | types}}]</span>
-    <h4>{{textList.title}}</h4>
-    <ul v-if="textList.type == 1 || textList.type == 3">
-      <li v-for="(item,index) in textList.items" :key="item.id" @click="tabItem(index)">
-        <div :class="tabIndex == index? 'active':''">{{item.chooseItem}}</div>
-        <div>{{item.chooseDesc}}</div>
-      </li>
-    </ul>
-    <ul v-if="textList.type == 2">
-      <li v-for="(item,index) in textList.items" :key="item.id" @click="choice(index)">
-        <div ref="div">{{item.chooseItem}}</div>
-        <div>{{item.chooseDesc}}</div>
-      </li>
-    </ul>
-    <div class="submit">
-      <button>提交</button>
-      <div>{{time}}s</div>
-      <button @click="next" :disabled='this.end'>下一题</button>
+  <div class="wrap-text">
+    <toolcip />
+    <header-top title='正在考试' :show='true'/>
+    <div class="text">
+      <span>[{{dataTextList.type | types}}]</span>
+      <h4>{{dataTextList.title}}</h4>
+      <ul v-if="dataTextList.type == 1 || dataTextList.type == 3">
+        <li v-for="(item,index) in dataTextList.items" :key="item.id" @click="tabItem(index)">
+          <div :class="tabIndex == index? 'active':''">{{item.chooseItem}}</div>
+          <div>{{item.chooseDesc}}</div>
+        </li>
+      </ul>
+      <ul v-if="dataTextList.type == 2">
+        <li v-for="(item,index) in dataTextList.items" :key="item.id" @click="choice(index)">
+          <div ref="div">{{item.chooseItem}}</div>
+          <div>{{item.chooseDesc}}</div>
+        </li>
+      </ul>
+      <div class="submit">
+        <button>提交</button>
+        <div>{{time}}s</div>
+        <button @click="next" :disabled='this.end'>下一题</button>
+      </div>
+      <dia-log :text="message" v-show="dialogShow" />
     </div>
-    <dia-log :text="message" v-show="dialogShow" />
   </div>
 </template>
 <script>
+import headerTop from '@/components/header/index.vue'
+import Toolcip from '@/components/toolcip/index.vue'
 import { GetAnswer, GetJoin } from '@/api/home'
 import { getUserId, getSessionId, getToken } from '@/utils/app'
 import diaLog from '@/components/dialog/index.vue'
 export default {
   props: ['textList'],
   components: {
+    headerTop,
+    Toolcip,
     diaLog
   },
   data() {
@@ -41,7 +49,8 @@ export default {
       time: 30,
       timer: '',
       end: false,
-      chooseNumStr: []
+      chooseNumStr: [],
+      dataTextList: {}
     }
   },
   filters: {
@@ -59,8 +68,8 @@ export default {
     //单选题
     tabItem(index) {
       this.tabIndex = index
-      this.chooseItem = this.textList.items[index].chooseItem
-      this.shitiId = this.textList.shitiId
+      this.chooseItem = this.dataTextList.items[index].chooseItem
+      this.shitiId = this.dataTextList.shitiId
     },
     //多选题
     choice(index) {
@@ -116,12 +125,13 @@ export default {
         shitiId: this.shitiId
       }
       GetJoin(requestData).then(res => {
+        console.log(res.data)
         if(res.data.data.isEnd) {
           this.message = '当前为最后一题'
           this.end = true
           return 
         }
-        this.textList = res.data.data
+        this.dataTextList = res.data.data
         //清空选项
         this.tabIndex = -1
         this.message = '',
@@ -144,6 +154,9 @@ export default {
       },1000)
     }
   },
+  created() {
+    this.dataTextList =this.textList
+  },
   mounted () {
     this.end = false
     this.getJoin()
@@ -155,7 +168,12 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
+.wrap-text {
+  height: 100vh;
+  overflow: hidden;
+}
 .text {
+  height: 100%;
   padding: 20px;
   span {
     color: #2998FF;
@@ -201,11 +219,12 @@ export default {
     }
   }
   .submit {
-    display: flex;
     position: absolute;
-    bottom: 20px;
+    bottom: 10px;
     width: calc(100% - 40px);
+    display: flex;
     justify-content: space-between;
+    overflow: hidden;
     button:first-child {
       padding: 7px 15px;
       border: 1px solid #DFDFDF;
@@ -226,4 +245,5 @@ export default {
     }
   }
 }
+
 </style>
