@@ -9,6 +9,12 @@
 <script>
 import BScroll from "better-scroll"
   export default {
+    props: {
+      pullUpLoad: {
+        type: Boolean,
+        default: false
+      }
+    },
     data() {
       return {
         scroll: null
@@ -17,7 +23,7 @@ import BScroll from "better-scroll"
     mounted() {
       this.scroll = new BScroll(this.$refs.wrapper,{
         click: true,
-        pullUpLoad: true
+        pullUpLoad: this.pullUpLoad
       })
       this.scroll.on('pullingUp',() => {
         this.$emit('pullUp')

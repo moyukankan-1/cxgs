@@ -24,7 +24,6 @@ export default {
       }else if(id == 1) {
         this.$emit('already2')
       }
-      
     }
   }
 }

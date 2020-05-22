@@ -2,7 +2,7 @@
   <div class="history">
     <header-top title='历史考试' :show='true'/>
     <clickMove :titles='titles.item'  @already1='already1' @already2='already2'/>
-    <scroll class="scroll" @pullUp='pullUp'>
+    <scroll class="scroll" @pullUp='loadMore' :pull-up-load='true' ref="scroll">
       <ul>
         <li v-for="item in history.item" :key="item.id" class="lis">
           <h3>{{item.title}}</h3>
@@ -67,7 +67,8 @@ export default {
       },
       type: 1,
       message: '',
-      dialogShow: false
+      dialogShow: false,
+      page: 1
     }
   },
   methods: {
@@ -77,11 +78,11 @@ export default {
         sessionId: getSessionId(),
         token: getToken(),
         historyType: this.type,
-        currentPage: 1,
+        currentPage: this.page,
         examNumber: 10
       }
       GetHistory(requestData).then(res => {
-        this.history.item = res.data.data.examList
+        this.history.item.push(...res.data.data.examList)
       }).catch(err => {})
     },
     //练习考试
@@ -95,8 +96,10 @@ export default {
       this.getHistory()
     },
     //上拉加载下一页
-    pullUp() {
-      console.log(11)
+    loadMore() {
+      this.page++
+      this.getHistory()
+      this.$refs.scroll.scroll.finishPullUp()
     }
   },
   mounted() {
