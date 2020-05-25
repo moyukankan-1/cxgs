@@ -60,6 +60,14 @@ Vue.use(VueRouter)
     {
       path: '/join',
       component: () => import('../views/Join/index.vue')
+    },
+    {
+      path: '/result',
+      component: () => import('../views/Result/index.vue')
+    },
+    {
+      path: '/rank',
+      component: () => import('../views/Rank/index.vue')
     }
   ]
 

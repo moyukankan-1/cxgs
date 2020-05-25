@@ -70,3 +70,23 @@ export function GetHistory(data) {
     data
   })
 }
+/**
+ * 历史考试 -- 考试结果进入
+ */
+export function GetDetail(data) {
+  return service.request({
+    method: "post",
+    url: "History/detail.html",
+    data
+  })
+}
+/**
+ * 历史考试 -- 排行榜进入
+ */
+export function GetRank(data) {
+  return service.request({
+    method: "post",
+    url: "History/rank.html",
+    data
+  })
+}

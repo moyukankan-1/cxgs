@@ -2,9 +2,9 @@
   <div class="history">
     <header-top title='历史考试' :show='true'/>
     <clickMove :titles='titles.item'  @already1='already1' @already2='already2'/>
-    <scroll class="scroll" @pullUp='loadMore' :pull-up-load='true' ref="scroll">
+    <scroll class="scroll" @pullUp='loadMore' :pull-up-load='pullUpLoad' ref="scroll">
       <ul>
-        <li v-for="item in history.item" :key="item.id" class="lis">
+        <li v-for="item in history.item" :key="item.id" class="lis" @click="result(item.id)">
           <h3>{{item.title}}</h3>
           <div class="li-container">
             <li>
@@ -31,7 +31,8 @@
         </li>
       </ul>
     </scroll>
-    <dia-log :text="message" v-show="dialogShow"/> 
+    <dia-log :text="message" v-show="dialogShow"/>
+    <loading :isLoading='isLoading' />
   </div>
 </template>
 <script>
@@ -39,6 +40,7 @@ import headerTop from '@/components/header/index.vue'
 import clickMove from '@/components/clickMove/index.vue'
 import Scroll from '@/components/scroll/index.vue'
 import diaLog from '@/components/dialog/index.vue'
+import Loading from '@/components/loading/index.vue'
 import { GetHistory } from '@/api/home'
 import { getUserId, getSessionId, getToken } from '@/utils/app'
 export default {
@@ -46,7 +48,8 @@ export default {
     headerTop,
     clickMove,
     Scroll,
-    diaLog
+    diaLog,
+    Loading
   },
   data() {
     return {
@@ -68,7 +71,14 @@ export default {
       type: 1,
       message: '',
       dialogShow: false,
-      page: 1
+      pullUpLoad: true,
+      page: 1,
+      //判断是否上拉
+      isPull: false,
+      //显示加载组件
+      isLoading: false,
+      //数据加载完成
+      success: false
     }
   },
   methods: {
@@ -82,25 +92,61 @@ export default {
         examNumber: 10
       }
       GetHistory(requestData).then(res => {
-        this.history.item.push(...res.data.data.examList)
+        if(this.isPull) {
+          if(res.data.data.examList == '') {
+            this.success = true
+          }
+          this.history.item.push(...res.data.data.examList)
+          //数据加载完成取消loading
+          this.isLoading = false
+        }else {
+          this.history.item = res.data.data.examList
+        }
       }).catch(err => {})
     },
     //练习考试
     already1() {
+      //练习模式type
       this.type = 1
+      //重置当前页码
+      this.page = 1
+      this.isPull = false
+      this.$refs.scroll.scroll.scrollTo(0,0,0)
       this.getHistory()
     },
     //闯关模式
     already2() {
+      //闯关模式type
       this.type = 2
+      //重置当前页码
+      this.page = 1
+      this.isPull = false
+      this.$refs.scroll.scroll.scrollTo(0,0,0)
       this.getHistory()
     },
     //上拉加载下一页
     loadMore() {
+      //上拉加载打开loading
+      this.isLoading = true
+      //页码加一
       this.page++
       this.getHistory()
+      this.isPull = true
       this.$refs.scroll.scroll.finishPullUp()
+      this.$refs.scroll.scroll.refresh()
+    },
+    //考试结果进入
+    result(id) {
+      this.$router.push({
+        path: '/result',
+        query: {
+          id: id
+        }
+      })
     }
+  },
+  activated() {
+    this.$refs.scroll.scroll.refresh()
   },
   mounted() {
     this.getHistory()
@@ -119,6 +165,7 @@ export default {
 .history {
   ul {
     padding: 20px;
+    padding-bottom: 0;
     .lis {
       box-shadow: 0px 0px 5px rgb(230,230,230);
       margin-bottom: 20px;
