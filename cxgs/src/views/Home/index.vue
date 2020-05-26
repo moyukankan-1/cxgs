@@ -1,7 +1,7 @@
 <template>
   <div class="home">
     <header-top title="首页" :show="show"/>
-    <scroll class="scroll">
+    <scroll class="scroll" ref="scroll">
       <div class="home-container">
         <img :src="'https://demo201.jiudianlianxian.com' + homeList.item.banner">
         <ul>

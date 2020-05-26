@@ -68,7 +68,15 @@ Vue.use(VueRouter)
     {
       path: '/rank',
       component: () => import('../views/Rank/index.vue')
-    }
+    },
+    {
+      path: '/article',
+      component: () => import('../views/Article/index.vue')
+    },
+    {
+      path: '/articleDetail',
+      component: () => import('../views/ArticleDetail/index.vue')
+    },
   ]
 
 const router = new VueRouter({

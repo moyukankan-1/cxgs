@@ -23,20 +23,24 @@
         </li>
       </ul>
     </div>
+    <loading :isLoading='isLoading' />
   </div>
 </template>
 <script>
 import headerTop from '@/components/header/index.vue'
 import { GetDetail } from '@/api/home'
 import { getUserId, getSessionId, getToken } from '@/utils/app'
+import Loading from '@/components/loading/index.vue'
 export default {
   components: {
-    headerTop
+    headerTop,
+    Loading
   },
   data () {
     return {
       resultId: '',
-      resultList: {}
+      resultList: {},
+      isLoading: true
     }
   },
   filters: {
@@ -59,8 +63,8 @@ export default {
         id: this.resultId
       }
       GetDetail(requestData).then(res => {
+        this.isLoading = false
         this.resultList = res.data.data
-        console.log(requestData)
       }).catch(err => {})
     },
     rank(id) {

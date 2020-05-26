@@ -76,7 +76,7 @@ export default {
       //判断是否上拉
       isPull: false,
       //显示加载组件
-      isLoading: false,
+      isLoading: true,
       //数据加载完成
       success: false
     }
@@ -92,13 +92,13 @@ export default {
         examNumber: 10
       }
       GetHistory(requestData).then(res => {
+        //数据加载完成取消loading
+        this.isLoading = false
         if(this.isPull) {
           if(res.data.data.examList == '') {
             this.success = true
           }
           this.history.item.push(...res.data.data.examList)
-          //数据加载完成取消loading
-          this.isLoading = false
         }else {
           this.history.item = res.data.data.examList
         }

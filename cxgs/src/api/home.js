@@ -90,3 +90,23 @@ export function GetRank(data) {
     data
   })
 }
+/**
+ * 知识库--栏目页面进入--文章栏目
+ */
+export function GetArticle(data) {
+  return service.request({
+    method: "post",
+    url: "Article/list.html",
+    data
+  })
+}
+/**
+ * 知识库--栏目页面进入--文章详情
+ */
+export function GetArticleDetail(data) {
+  return service.request({
+    method: "post",
+    url: "Article/detail.html",
+    data
+  })
+}
