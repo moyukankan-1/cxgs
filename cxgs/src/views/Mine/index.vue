@@ -3,12 +3,18 @@
     <div class="mine-top">
       <h3 class="mine-title">
         {{userList.username}}
-        <span>{{userList.sex}}</span>
+        <svg-icon :icon-class="userList.sex | sex"/>
       </h3>
       <p class="mine-tel">{{userList.tel}}</p>
       <span class="mine-label">{{userList.department}}</span>
       <img :src="userList.image" alt="暂无图片">
     </div>
+    <ul>
+      <li v-for="item in list" :key="item.id">
+        <svg-icon :icon-class="item.icon"/>
+        <span>{{item.name}}</span>
+      </li>
+    </ul>
   </div>
 </template>
 <script>
@@ -16,7 +22,34 @@ import { GetUser } from '@/api/home'
 export default {
   data() {
     return {
-      userList: {}
+      userList: {},
+      list: [
+        {
+          icon: 'mine-err',
+          name: '错题本'
+        },
+        {
+          icon: 'mine-pas',
+          name: '密码修改'
+        },
+        {
+          icon: 'mine-set',
+          name: '设置'
+        },
+        {
+          icon: 'mine-quit',
+          name: '退出登录'
+        },
+      ]
+    }
+  },
+  filters:{
+    sex(item) {
+      if(item == 1) {
+        return 'mine-boy'
+      }else {
+        return 'mine-girl'
+      }
     }
   },
   methods: {
@@ -43,7 +76,7 @@ export default {
     position: relative;
     margin-top: 20px;
     .mine-title {
-      font-size: 18px;
+      font-size: 20px;
       font-weight: 600;
     }
     .mine-tel {
@@ -52,9 +85,10 @@ export default {
     .mine-label {
       display: inline-block;
       padding: 6px 15px;
-      background: #666;
+      background: #EDEDED;
       border-radius: 20px;
       font-size: 14px;
+      color: #AAAAAA;
     }
     img {
       position: absolute;
@@ -63,7 +97,24 @@ export default {
       border-radius: 50%;
       width: 80px;
       height: 80px;
-      border: 1px solid #000;
+      border: 1px solid #EDEDED;
+    }
+  }
+  ul {
+    margin-top: 30px;
+    li {
+      display: flex;
+      padding: 25px 0;
+      border-top: 1px solid #EFEFEF;
+      font-size: 18px;
+      span {
+        display: inline-block;
+        margin-left: 10px;
+        margin-top: -1px;
+      }
+    }
+    & li:last-child {
+      border-bottom: 1px solid #EFEFEF;
     }
   }
 }
