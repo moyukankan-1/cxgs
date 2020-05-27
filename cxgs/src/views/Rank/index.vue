@@ -47,7 +47,6 @@
 <script>
 import headerTop from '@/components/header/index.vue'
 import { GetRank } from '@/api/home'
-import { getUserId, getSessionId, getToken } from '@/utils/app'
 import Loading from '@/components/loading/index.vue'
 export default {
   components: {
@@ -56,7 +55,7 @@ export default {
   },
   data () {
     return {
-      rankId: '',
+      rankId: this.$route.query.id,
       rankList: {},
       noText: '',
       isLoading: true
@@ -65,9 +64,9 @@ export default {
   methods: {
     getRank() {
       let requestData = {
-        userId: getUserId(),
-        sessionId: getSessionId(),
-        token: getToken(),
+        userId: this.getUserId,
+        sessionId: this.getSessionId,
+        token: this.getToken,
         id: this.rankId
       }
       GetRank(requestData).then(res => {
@@ -81,9 +80,7 @@ export default {
       }).catch(err => {})
     }
   },
-  activated() {
-    this.isLoading = true
-    this.rankId = this.$route.query.id
+  mounted() {
     this.getRank()
   }
 }

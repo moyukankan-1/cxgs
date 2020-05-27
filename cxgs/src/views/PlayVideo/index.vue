@@ -15,7 +15,6 @@
 <script>
 import { videoPlayer } from 'vue-video-player'
 import 'video.js/dist/video-js.css'
-import { getUserId, getSessionId, getToken } from '@/utils/app'
 import { GetPlayVideo } from '@/api/home'
 import { format } from '@/utils/timeChange'
   export default {
@@ -55,16 +54,14 @@ import { format } from '@/utils/timeChange'
     },
     mounted() {
       let requestData = {
-        userId: getUserId(),
-        sessionId: getSessionId(),
-        token: getToken(),
+        userId: this.getUserId,
+        sessionId: this.getSessionId,
+        token: this.getToken,
         videoId: this.$route.query.videoId
       }
       GetPlayVideo(requestData).then(res => {
         this.play = res.data.data
         this.playerOptions.sources[0].src = "https://demo201.jiudianlianxian.com" + this.play.videoUrl
-        console.log(res.data.data)
-        console.log(this.playerOptions.sources[0].src)
       }).catch(err => {})
     }  
   }

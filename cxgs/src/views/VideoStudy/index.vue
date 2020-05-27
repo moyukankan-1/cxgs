@@ -3,7 +3,7 @@
     <header-top title='视频学习' :show='true'/>
     <div class="study-container">
       <ul>
-        <li v-for="item in videoList.item" :key="item.id" @click="playVideo(item.videoId)">
+        <li v-for="item in videoList" :key="item.id" @click="playVideo(item.videoId)">
           <img :src="'https://demo201.jiudianlianxian.com' + item.image">
           <p>{{item.title}}</p>
           <span>{{item.time | times}}</span>
@@ -15,7 +15,6 @@
 <script>
 import headerTop from '@/components/header/index.vue'
 import { GetVideoStudyMain } from '@/api/home'
-import { getUserId, getSessionId, getToken } from '@/utils/app'
 import { format } from '@/utils/timeChange'
 export default {
   components: {
@@ -24,9 +23,7 @@ export default {
   data() {
     return {
       //视频数据
-      videoList: {
-        item: []
-      }
+      videoList: []
     }
   },
   filters: {
@@ -38,14 +35,14 @@ export default {
     //获取视频列表
     getVideoStudyMain() {
       let requestData = {
-        userId: getUserId(),
-        sessionId: getSessionId(),
-        token: getToken(),
+        userId: this.getUserId,
+        sessionId: this.getSessionId,
+        token: this.getToken,
         currentPage: 1,
         videoNumber: 3
       }
       GetVideoStudyMain(requestData).then(res => {
-        this.videoList.item = res.data.data.videoList
+        this.videoList = res.data.data.videoList
       }).catch(err => {})
     },
     //点击视频进入播放页

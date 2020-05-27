@@ -29,7 +29,6 @@
 <script>
 import headerTop from '@/components/header/index.vue'
 import { GetDetail } from '@/api/home'
-import { getUserId, getSessionId, getToken } from '@/utils/app'
 import Loading from '@/components/loading/index.vue'
 export default {
   components: {
@@ -38,7 +37,7 @@ export default {
   },
   data () {
     return {
-      resultId: '',
+      resultId: this.$route.query.id,
       resultList: {},
       isLoading: true
     }
@@ -57,9 +56,9 @@ export default {
   methods: {
     getDetail() {
       let requestData = {
-        userId: getUserId(),
-        sessionId: getSessionId(),
-        token: getToken(),
+        userId: this.getUserId,
+        sessionId: this.getSessionId,
+        token: this.getToken,
         id: this.resultId
       }
       GetDetail(requestData).then(res => {
@@ -76,9 +75,7 @@ export default {
       })
     }
   },
-  //活跃状态
-  activated() {
-    this.resultId = this.$route.query.id
+  mounted() {
     this.getDetail()
   }
 }

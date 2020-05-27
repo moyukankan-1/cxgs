@@ -4,7 +4,7 @@
     <clickMove :titles='titles.item'  @already1='already1' @already2='already2'/>
     <scroll class="scroll" @pullUp='loadMore' :pull-up-load='pullUpLoad' ref="scroll">
       <ul>
-        <li v-for="item in history.item" :key="item.id" class="lis" @click="result(item.id)">
+        <li v-for="item in history" :key="item.id" class="lis" @click="result(item.id)">
           <h3>{{item.title}}</h3>
           <div class="li-container">
             <li>
@@ -42,7 +42,6 @@ import Scroll from '@/components/scroll/index.vue'
 import diaLog from '@/components/dialog/index.vue'
 import Loading from '@/components/loading/index.vue'
 import { GetHistory } from '@/api/home'
-import { getUserId, getSessionId, getToken } from '@/utils/app'
 export default {
   components: {
     headerTop,
@@ -65,9 +64,7 @@ export default {
           },
         ]
       },
-      history: {
-        item: []
-      },
+      history: [],
       type: 1,
       message: '',
       dialogShow: false,
@@ -84,9 +81,9 @@ export default {
   methods: {
     getHistory() {
       let requestData = {
-        userId: getUserId(),
-        sessionId: getSessionId(),
-        token: getToken(),
+        userId: this.getUserId,
+        sessionId: this.getSessionId,
+        token: this.getToken,
         historyType: this.type,
         currentPage: this.page,
         examNumber: 10
@@ -98,9 +95,9 @@ export default {
           if(res.data.data.examList == '') {
             this.success = true
           }
-          this.history.item.push(...res.data.data.examList)
+          this.history.push(...res.data.data.examList)
         }else {
-          this.history.item = res.data.data.examList
+          this.history = res.data.data.examList
         }
       }).catch(err => {})
     },

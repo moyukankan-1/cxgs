@@ -3,11 +3,11 @@
     <header-top title='练习模式' :show='true'/>
     <div class="title">试题分类</div>
     <ul>
-      <li v-for="(item,index) in itemList.item" :key="item.id" :class="index == idx? 'active': ''" @click="activeIdx(index)">{{item.itemName}}</li>
+      <li v-for="(item,index) in itemList" :key="item.id" :class="index == idx? 'active': ''" @click="activeIdx(index)">{{item.itemName}}</li>
     </ul>
     <div class="title">试题类型</div>
     <ul>
-      <li v-for="item in type.item" :key="item.id" :class="item.id == typeIdx? 'active': ''" @click="activeTypeIdx(item.id)">{{item.name}}</li>
+      <li v-for="item in type" :key="item.id" :class="item.id == typeIdx? 'active': ''" @click="activeTypeIdx(item.id)">{{item.name}}</li>
     </ul>
     <p @click="join">开始练习</p>
   </div>
@@ -15,35 +15,30 @@
 <script>
 import headerTop from '@/components/header/index.vue'
 import { GetPractice } from '@/api/home'
-import { getUserId, getSessionId, getToken } from '@/utils/app'
 export default {
   components: {
     headerTop
   },
   data() {
     return {
-      itemList: {
-        item: []
-      },
-      type: {
-        item: [
-          {
-            id: 0,
-            name: '单选题',
-            type: 1
-          },
-          {
-            id: 1,
-            name: '多选题',
-            type: 2
-          },
-          {
-            id: 2,
-            name: '判断题',
-            type: 3
-          }
-        ]
-      },
+      itemList: [],
+      type: [
+        {
+          id: 0,
+          name: '单选题',
+          type: 1
+        },
+        {
+          id: 1,
+          name: '多选题',
+          type: 2
+        },
+        {
+          id: 2,
+          name: '判断题',
+          type: 3
+        }
+      ],
       idx: 0,
       typeIdx: 0,
       itemId: 2010381,
@@ -53,21 +48,21 @@ export default {
   methods: {
     getPractice() {
       let requestData = {
-        userId: getUserId(),
-        sessionId: getSessionId(),
-        token: getToken()
+        userId: this.getUserId,
+        sessionId: this.getSessionId,
+        token: this.getToken
       }
       GetPractice(requestData).then(res => {
-        this.itemList.item = res.data.data.itemList
+        this.itemList = res.data.data.itemList
       }).catch(err => {})
     },
     activeIdx(index) {
       this.idx = index
-      this.itemId = this.itemList.item[index].itemId
+      this.itemId = this.itemList[index].itemId
     },
     activeTypeIdx(index) {
       this.typeIdx = index
-      this.shitiType = this.type.item[index].type
+      this.shitiType = this.type[index].type
     },
     join() {
       this.$router.push({

@@ -16,34 +16,49 @@ Vue.use(VueRouter)
       path: '/home',
       component: () => import('../views/Home/index.vue'),
       meta: {
-        showFooter: true
+        showFooter: true,
+        keep: true
       }
     },
     {
       path: '/history',
       component: () => import('../views/History/index.vue'),
       meta: {
-        showFooter: true
+        showFooter: true,
+        keep: true
       }
     },
     {
       path: '/knowledge',
       component: () => import('../views/Knowledge/index.vue'),
       meta: {
-        showFooter: true
+        showFooter: true,
+        keep: true
       }
     },
     {
       path: '/mine',
       component: () => import('../views/Mine/index.vue'),
+      meta: {
+        showFooter: true,
+        keep: true
+      }
     },
     {
       path: '/examineCarry',
-      component: () => import('../views/ExamineCarry/index.vue')
+      component: () => import('../views/ExamineCarry/index.vue'),
+      meta: {
+        showFooter: true,
+        keep: true
+      }
     },
     {
       path: '/answer',
-      component: () => import('../views/Answer/index.vue')
+      component: () => import('../views/Answer/index.vue'),
+      meta: {
+        showFooter: true,
+        keep: true
+      }
     },
     {
       path: '/videoStudy',
@@ -76,6 +91,10 @@ Vue.use(VueRouter)
     {
       path: '/articleDetail',
       component: () => import('../views/ArticleDetail/index.vue')
+    },
+    {
+      path: '/question',
+      component: () => import('../views/Question/index.vue')
     },
   ]
 

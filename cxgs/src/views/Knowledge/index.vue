@@ -3,7 +3,7 @@
     <header-top title='知识库' :show='true'/>
     <div class="knowledge-img">
       <img src="@/assets/images/knowledge-1.png" alt="" @click="$router.push('/videoStudy')">
-      <img src="@/assets/images/knowledge-2.png" alt="">
+      <img src="@/assets/images/knowledge-2.png" alt="" @click="$router.push('/question')">
       <img src="@/assets/images/knowledge-3.png" alt="" @click="$router.push('/article')">
     </div>
     <loading :isLoading='isLoading' />

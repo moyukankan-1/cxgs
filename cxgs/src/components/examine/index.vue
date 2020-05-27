@@ -3,9 +3,9 @@
     <ul>
       <li v-for="item in list" :key="item.id">
         <span v-if="kao">考</span>
-        <h3 :class="kao? 'left':''">{{item.title}}</h3>
-        <div class="examine-num">共计{{item.num}}题</div>
-        <div class="examine-title">考试时间：{{item.time}}</div>
+        <h3 :class="kao? 'left':''">{{item.title || item.itemName}}</h3>
+        <div class="examine-num">共计{{item.num || item.number}}题</div>
+        <div class="examine-title" v-if="time">考试时间：{{item.time}}</div>
         <div class="examine-button" @click="answer">答题</div>
       </li>
     </ul>
@@ -13,10 +13,9 @@
 </template>
 <script>
 export default {
-  props: ['list','kao'],
+  props: ['list','kao','time'],
   data() {
     return {
-      
     }
   },
   methods: {

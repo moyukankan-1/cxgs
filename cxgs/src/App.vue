@@ -1,8 +1,9 @@
 <template>
   <div id="app">
-    <keep-alive>
+    <keep-alive v-if="$route.meta.keep">
       <router-view/>
     </keep-alive>
+    <router-view v-else/>
     <tabbar-bottom v-show="$route.meta.showFooter" /> 
   </div>
 </template>

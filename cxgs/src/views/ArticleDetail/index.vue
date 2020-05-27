@@ -15,7 +15,6 @@
 import headerTop from '@/components/header/index.vue'
 import { GetArticleDetail } from '@/api/home'
 import Loading from '@/components/loading/index.vue'
-import { getUserId, getSessionId, getToken } from '@/utils/app'
 export default {
   components: {
     headerTop,
@@ -32,9 +31,9 @@ export default {
   methods: {
     getArticleDetail() {
       let requestData = {
-        userId: getUserId(),
-        sessionId: getSessionId(),
-        token: getToken(),
+        userId: this.getUserId,
+        sessionId: this.getSessionId,
+        token: this.getToken,
         articleId: this.articleId
       }
       GetArticleDetail(requestData).then(res => {
@@ -47,11 +46,6 @@ export default {
         }
       }).catch(err => {})
     }
-  },
-  activated() {
-    this.isLoading = true
-    this.articleId = this.$route.query.id
-    this.getArticleDetail()
   },
   mounted() {
     this.getArticleDetail()

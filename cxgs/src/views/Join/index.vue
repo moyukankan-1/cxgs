@@ -1,11 +1,10 @@
 <template>
   <div class="join">
-    <text-list :textList='joinList.item' />
+    <text-list :textList='joinList' />
   </div>
 </template>
 <script>
 import { GetJoin } from '@/api/home'
-import { getUserId, getSessionId, getToken } from '@/utils/app'
 import TextList from '@/components/text/index.vue'
 export default {
   components: {
@@ -14,23 +13,21 @@ export default {
   data() {
     return {
       shitiId: 0,
-      joinList: {
-        item: {}
-      }
+      joinList: {}
     }
   },
   methods: {
     getJoin() {
       let requestData = {
-        userId: getUserId(),
-        sessionId: getSessionId(),
-        token: getToken(),
+        userId: this.getUserId,
+        sessionId: this.getSessionId,
+        token: this.getToken,
         itemId: this.$route.query.itemId,
         shitiType: this.$route.query.shitiType,
         shitiId: this.shitiId
       }
       GetJoin(requestData).then(res => {
-        this.joinList.item = res.data.data
+        this.joinList = res.data.data
       }).catch(err => {})
     }
   },

@@ -110,3 +110,23 @@ export function GetArticleDetail(data) {
     data
   })
 }
+/**
+ * 知识库--栏目页面进入--试题分类栏目
+ */
+export function GetQuestion(data) {
+  return service.request({
+    method: "post",
+    url: "Questions/index.html",
+    data
+  })
+}
+/**
+ * 我的--栏目进入
+ */
+export function GetUser(data) {
+  return service.request({
+    method: "post",
+    url: "User/index.html",
+    data
+  })
+}

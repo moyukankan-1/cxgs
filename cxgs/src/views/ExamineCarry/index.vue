@@ -3,9 +3,9 @@
     <toolcip />
     <header-top title='考试' :show='true'/>
     <scroll class="scroll">
-      <clickMove :titles='titles.item' @already1='already1' @already2='already2'/>
+      <clickMove :titles='titles' @already1='already1' @already2='already2'/>
       <div class="carry-list">
-        <examine-list :list='examineList.item' :kao='false' v-if='hidden'/>
+        <examine-list :list='examineList' :kao='false' :time='true' v-if='hidden'/>
         <div v-else class="not">暂无数据</div>
       </div>
     </scroll>
@@ -27,20 +27,17 @@ export default {
   },
   data() {
     return {
-      titles: {
-        item: [
-          {
-            id: 0,
-            title: "可考试"
-          },
-          {
-            id: 1,
-            title: "已考试"
-          }
-        ]
-      },
-      examineList: {
-        item: [
+      titles: [
+        {
+          id: 0,
+          title: "可考试"
+        },
+        {
+          id: 1,
+          title: "已考试"
+        }
+      ],
+      examineList: [
         {
           title: '2019-2020学年行政职业能力',
           num: 12,
@@ -76,8 +73,7 @@ export default {
           num: 12,
           time: '06/10 08:30 - 06/14 08:30'
         },
-        ]
-      },
+      ],
       hidden: true
     }
   },
