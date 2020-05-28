@@ -130,3 +130,23 @@ export function GetUser(data) {
     data
   })
 }
+/**
+ * 我的--错题本-栏目主页进入
+ */
+export function GetError(data) {
+  return service.request({
+    method: "post",
+    url: "WrongQuestions/index.html",
+    data
+  })
+}
+/**
+ * 我的--错题本-详情页进入
+ */
+export function GetErrorDetail(data) {
+  return service.request({
+    method: "post",
+    url: "WrongQuestions/join.html",
+    data
+  })
+}

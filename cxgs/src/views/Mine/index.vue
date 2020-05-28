@@ -10,7 +10,7 @@
       <img :src="userList.image" alt="暂无图片">
     </div>
     <ul>
-      <li v-for="item in list" :key="item.id">
+      <li v-for="(item,index) in list" :key="item.id" @click='child(index)'>
         <svg-icon :icon-class="item.icon"/>
         <span>{{item.name}}</span>
       </li>
@@ -62,6 +62,11 @@ export default {
       GetUser(requestData).then(res => {
         this.userList = res.data.data
       }).catch(err => {})
+    },
+    child(index) {
+      if(index == 0) {
+        this.$router.push('/errorBook')
+      }
     }
   },
   mounted() {

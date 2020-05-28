@@ -96,6 +96,14 @@ Vue.use(VueRouter)
       path: '/question',
       component: () => import('../views/Question/index.vue')
     },
+    {
+      path: '/errorBook',
+      component: () => import('../views/ErrorBook/index.vue')
+    },
+    {
+      path: '/errorBookDetail',
+      component: () => import('../views/ErrorBookDetail/index.vue')
+    }
   ]
 
 const router = new VueRouter({
