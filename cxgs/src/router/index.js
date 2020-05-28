@@ -103,6 +103,10 @@ Vue.use(VueRouter)
     {
       path: '/errorBookDetail',
       component: () => import('../views/ErrorBookDetail/index.vue')
+    },
+    {
+      path: '/resetPassword',
+      component: () => import('../views/ResetPassword/index.vue')
     }
   ]
 

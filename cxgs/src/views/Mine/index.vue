@@ -66,6 +66,8 @@ export default {
     child(index) {
       if(index == 0) {
         this.$router.push('/errorBook')
+      }else if(index == 1) {
+        this.$router.push('/resetPassword')
       }
     }
   },

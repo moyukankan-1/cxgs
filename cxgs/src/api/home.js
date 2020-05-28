@@ -150,3 +150,13 @@ export function GetErrorDetail(data) {
     data
   })
 }
+/**
+ * 我的--修改密码
+ */
+export function GetResetPassword(data) {
+  return service.request({
+    method: "post",
+    url: "User/resetPassword.html",
+    data
+  })
+}
