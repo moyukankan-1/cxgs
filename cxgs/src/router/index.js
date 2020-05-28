@@ -107,6 +107,10 @@ Vue.use(VueRouter)
     {
       path: '/resetPassword',
       component: () => import('../views/ResetPassword/index.vue')
+    },
+    {
+      path: '/reset',
+      component: () => import('../views/Reset/index.vue')
     }
   ]
 

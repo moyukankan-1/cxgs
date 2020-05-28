@@ -160,3 +160,23 @@ export function GetResetPassword(data) {
     data
   })
 }
+/**
+ * 我的--设置--栏目进入
+ */
+export function GetReset(data) {
+  return service.request({
+    method: "post",
+    url: "User/detail.html",
+    data
+  })
+}
+/**
+ * 我的--设置--头像上传
+ */
+export function GetUploadImage(data) {
+  return service.request({
+    method: "post",
+    url: "User/uploadImage.html",
+    data
+  })
+}

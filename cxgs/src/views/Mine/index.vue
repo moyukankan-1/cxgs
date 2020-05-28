@@ -68,6 +68,8 @@ export default {
         this.$router.push('/errorBook')
       }else if(index == 1) {
         this.$router.push('/resetPassword')
+      }else if(index == 2) {
+        this.$router.push('/reset')
       }
     }
   },
