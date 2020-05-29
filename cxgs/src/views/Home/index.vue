@@ -3,7 +3,7 @@
     <header-top title="首页" :show="show"/>
     <scroll class="scroll" ref="scroll">
       <div class="home-container">
-        <img :src="'https://demo201.jiudianlianxian.com' + homeList.banner">
+        <img src="@/assets/images/home-1.png">
         <ul>
           <li v-for="item in tabList" :key="item.id" @click="push(item.id)">
             <svg-icon :icon-class="item.svg"></svg-icon>

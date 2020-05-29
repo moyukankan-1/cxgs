@@ -48,7 +48,6 @@ Vue.use(VueRouter)
       path: '/examineCarry',
       component: () => import('../views/ExamineCarry/index.vue'),
       meta: {
-        showFooter: true,
         keep: true
       }
     },
@@ -56,7 +55,6 @@ Vue.use(VueRouter)
       path: '/answer',
       component: () => import('../views/Answer/index.vue'),
       meta: {
-        showFooter: true,
         keep: true
       }
     },

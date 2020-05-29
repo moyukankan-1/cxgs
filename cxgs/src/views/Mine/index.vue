@@ -15,11 +15,16 @@
         <span>{{item.name}}</span>
       </li>
     </ul>
+    <dia-log text='退出成功' v-show="show"/>
   </div>
 </template>
 <script>
 import { GetUser } from '@/api/home'
+import diaLog from '@/components/dialog/index.vue'
 export default {
+  components: {
+    diaLog
+  },
   data() {
     return {
       userList: {},
@@ -40,7 +45,8 @@ export default {
           icon: 'mine-quit',
           name: '退出登录'
         },
-      ]
+      ],
+      show: false
     }
   },
   filters:{
@@ -70,6 +76,12 @@ export default {
         this.$router.push('/resetPassword')
       }else if(index == 2) {
         this.$router.push('/reset')
+      }else {
+        this.show = true
+        setTimeout(() => {
+          this.show = false
+          this.$router.push('/login')
+        },1000)
       }
     }
   },

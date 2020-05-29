@@ -7,6 +7,7 @@
         <span></span>
         <span></span>
       </div>
+      <input type="file" accept="image/jpeg, image/jpg, image/png" @change.stop="handleFile" class="hiddenInput" style="display: none">
     </div>
     <form>
       <div class="form-item">
@@ -22,15 +23,18 @@
         <input type="text" v-model="forms.email">
       </div>
     </form>
-    <button class="btn">保存</button>
+    <button class="btn" @click="resets">保存</button>
+    <dia-log :text='message' v-show="show"/>
   </div>
 </template>
 <script>
 import headerTop from '@/components/header/index.vue'
-import { GetReset, GetUploadImage } from '@/api/home'
+import diaLog from '@/components/dialog/index.vue'
+import { GetReset, GetUploadImage, GetSave } from '@/api/home'
 export default {
   components: {
-    headerTop
+    headerTop,
+    diaLog
   },
   data () {
     return {
@@ -39,7 +43,11 @@ export default {
         wechat: '',
         email: ''
       },
-      resetList: {}
+      resetList: {},
+      imageContent: '',
+      imageUrl: '',
+      message: '',
+      show: false
     }
   },
   methods: {
@@ -52,18 +60,61 @@ export default {
       }
       GetReset(requestData).then(res => {
         this.resetList = res.data.data
+        this.forms.tel = this.resetList.tel
+        this.forms.wechat = this.resetList.wechat
+        this.forms.email = this.resetList.email
       }).catch(err => {})
     },
     //头像上传
     upload() {
+      this.$el.querySelector(".hiddenInput").click()  //事件转移
+    },
+    handleFile(e) {
+      let file = e.target.files[0]
+      let reader = new FileReader()
+      reader.readAsDataURL(file)
+      reader.onload = (e) => {
+        this.imageContent = e.target.result
+        let requestData = {
+          userId: this.getUserId,
+          sessionId: this.getSessionId,
+          token: this.getToken,
+          imageContent: this.imageContent
+        }
+        GetUploadImage(requestData).then(res => {
+          if(res.data.code == 0) {
+            console.log('上传成功')
+            this.imageUrl = "https://demo201.jiudianlianxian.com" + res.data.data.imageUrl
+            this.resetList.image = this.imageUrl
+            localStorage.setItem('imageUrl',this.imageUrl)
+          }
+        }).catch(err => {})
+      }
+    },
+    resets() {
       let requestData = {
         userId: this.getUserId,
         sessionId: this.getSessionId,
         token: this.getToken,
-        imageContent: ''
+        image: localStorage.getItem('imageUrl'),
+        tel: this.forms.tel,
+        wechat: this.forms.wechat,
+        email: this.forms.email
       }
-      GetUploadImage(requestData).then(res => {
-        console.log(res)
+      GetSave(requestData).then(res => {
+        console.log(requestData.image)
+        if(res.data.code == 0) {
+          this.message = res.data.info
+          this.getReset()
+          this.show = true
+          //修改成功跳转至我的
+          setTimeout(() => {
+            this.show = false
+            this.$router.back()
+          },1000)
+        }else {
+          this.message = res.data.info
+        }
       }).catch(err => {})
     }
   },

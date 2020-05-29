@@ -180,3 +180,13 @@ export function GetUploadImage(data) {
     data
   })
 }
+/**
+ * 我的--设置--修改提交
+ */
+export function GetSave(data) {
+  return service.request({
+    method: "post",
+    url: "User/save.html",
+    data
+  })
+}
