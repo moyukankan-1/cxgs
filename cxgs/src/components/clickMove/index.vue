@@ -19,11 +19,7 @@ export default {
   methods: {
     activeClick(id) {
       this.idx = id
-      if(id == 0) {
-        this.$emit('already1')
-      }else if(id == 1) {
-        this.$emit('already2')
-      }
+      this.$emit('already',id)
     }
   }
 }
@@ -39,6 +35,7 @@ export default {
     li {
       margin-right: 30px;
       color: #A8A8A8;
+      font-size: 15px;
     }
     & li:last-child {
       margin-right: 0;
@@ -52,7 +49,7 @@ export default {
   }
   .active {
     color: #000;
-    font-size: 20px;
+    font-size: 16px;
     font-weight: 550;
   }
 }

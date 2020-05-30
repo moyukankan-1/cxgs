@@ -15,6 +15,7 @@
 <script>
 import headerTop from '@/components/header/index.vue'
 import { GetPractice } from '@/api/home'
+import { getUserId, getSessionId, getToken } from '@/utils/app'
 export default {
   components: {
     headerTop
@@ -48,9 +49,9 @@ export default {
   methods: {
     getPractice() {
       let requestData = {
-        userId: this.getUserId,
-        sessionId: this.getSessionId,
-        token: this.getToken
+        userId: getUserId(),
+        sessionId: getSessionId(),
+        token: getToken()
       }
       GetPractice(requestData).then(res => {
         this.itemList = res.data.data.itemList

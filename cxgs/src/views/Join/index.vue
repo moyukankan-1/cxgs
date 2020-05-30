@@ -6,6 +6,7 @@
 <script>
 import { GetJoin } from '@/api/home'
 import TextList from '@/components/text/index.vue'
+import { getUserId, getSessionId, getToken } from '@/utils/app'
 export default {
   components: {
     TextList
@@ -19,9 +20,9 @@ export default {
   methods: {
     getJoin() {
       let requestData = {
-        userId: this.getUserId,
-        sessionId: this.getSessionId,
-        token: this.getToken,
+        userId: getUserId(),
+        sessionId: getSessionId(),
+        token: getToken(),
         itemId: this.$route.query.itemId,
         shitiType: this.$route.query.shitiType,
         shitiId: this.shitiId

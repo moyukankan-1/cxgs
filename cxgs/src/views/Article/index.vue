@@ -20,6 +20,7 @@ import headerTop from '@/components/header/index.vue'
 import { GetArticle } from '@/api/home'
 import Scroll from '@/components/scroll/index.vue'
 import Loading from '@/components/loading/index.vue'
+import { getUserId, getSessionId, getToken } from '@/utils/app'
 export default {
   components: {
     headerTop,
@@ -37,9 +38,9 @@ export default {
   methods: {
     getArticle() {
       let requestData = {
-        userId: this.getUserId,
-        sessionId: this.getSessionId,
-        token: this.getToken,
+        userId: getUserId(),
+        sessionId: getSessionId(),
+        token: getToken(),
         currentPage: this.page,
         number: 10
       }

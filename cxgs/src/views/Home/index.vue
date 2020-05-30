@@ -29,6 +29,7 @@ import headerTop from '@/components/header/index.vue'
 import { GetHome } from '@/api/home'
 import examineList from '@/components/examine/index.vue'
 import Scroll from '@/components/scroll/index.vue'
+import { getUserId, getSessionId, getToken } from '@/utils/app'
 export default {
   components: {
     headerTop,
@@ -101,12 +102,12 @@ export default {
   methods: {
      //首页数据
     getHome() {
-      const data = {
-        userId: this.getUserId,
-        sessionId: this.getSessionId,
-        token: this.getToken
+      let requestData = {
+        userId: getUserId(),
+        sessionId: getSessionId(),
+        token: getToken()
       }
-      GetHome(data).then(res => {
+      GetHome(requestData).then(res => {
         this.homeList = res.data.data
       }).catch(err => {})
     },
@@ -116,8 +117,12 @@ export default {
         this.$router.push('/examineCarry')
       }else if(id == 1) {
         this.$router.push('/videoStudy')
+      }else if(id == 2) {
+        this.$router.push('/examCheck')
       }else if(id == 3) {
         this.$router.push('/practice')
+      }else if(id == 4) {
+        this.$router.push('/join')
       }
     }
   },

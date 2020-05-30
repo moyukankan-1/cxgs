@@ -31,6 +31,7 @@
 import headerTop from '@/components/header/index.vue'
 import diaLog from '@/components/dialog/index.vue'
 import { GetReset, GetUploadImage, GetSave } from '@/api/home'
+import { getUserId, getSessionId, getToken } from '@/utils/app'
 export default {
   components: {
     headerTop,
@@ -54,9 +55,9 @@ export default {
     //初始化加载数据
     getReset() {
       let requestData = {
-        userId: this.getUserId,
-        sessionId: this.getSessionId,
-        token: this.getToken
+        userId: getUserId(),
+        sessionId: getSessionId(),
+        token: getToken()
       }
       GetReset(requestData).then(res => {
         this.resetList = res.data.data
@@ -76,14 +77,13 @@ export default {
       reader.onload = (e) => {
         this.imageContent = e.target.result
         let requestData = {
-          userId: this.getUserId,
-          sessionId: this.getSessionId,
-          token: this.getToken,
+          userId: getUserId(),
+          sessionId: getSessionId(),
+          token: getToken(),
           imageContent: this.imageContent
         }
         GetUploadImage(requestData).then(res => {
           if(res.data.code == 0) {
-            console.log('上传成功')
             this.imageUrl = "https://demo201.jiudianlianxian.com" + res.data.data.imageUrl
             this.resetList.image = this.imageUrl
             localStorage.setItem('imageUrl',this.imageUrl)
@@ -93,9 +93,9 @@ export default {
     },
     resets() {
       let requestData = {
-        userId: this.getUserId,
-        sessionId: this.getSessionId,
-        token: this.getToken,
+        userId: getUserId(),
+        sessionId: getSessionId(),
+        token: getToken(),
         image: localStorage.getItem('imageUrl'),
         tel: this.forms.tel,
         wechat: this.forms.wechat,

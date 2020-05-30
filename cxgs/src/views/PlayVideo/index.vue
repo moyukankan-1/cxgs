@@ -17,6 +17,7 @@ import { videoPlayer } from 'vue-video-player'
 import 'video.js/dist/video-js.css'
 import { GetPlayVideo } from '@/api/home'
 import { format } from '@/utils/timeChange'
+import { getUserId, getSessionId, getToken } from '@/utils/app'
   export default {
     components: {
       videoPlayer
@@ -54,9 +55,9 @@ import { format } from '@/utils/timeChange'
     },
     mounted() {
       let requestData = {
-        userId: this.getUserId,
-        sessionId: this.getSessionId,
-        token: this.getToken,
+        userId: getUserId(),
+        sessionId: getSessionId(),
+        token: getToken(),
         videoId: this.$route.query.videoId
       }
       GetPlayVideo(requestData).then(res => {

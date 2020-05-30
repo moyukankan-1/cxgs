@@ -30,6 +30,7 @@
 import headerTop from '@/components/header/index.vue'
 import { GetDetail } from '@/api/home'
 import Loading from '@/components/loading/index.vue'
+import { getUserId, getSessionId, getToken } from '@/utils/app'
 export default {
   components: {
     headerTop,
@@ -56,9 +57,9 @@ export default {
   methods: {
     getDetail() {
       let requestData = {
-        userId: this.getUserId,
-        sessionId: this.getSessionId,
-        token: this.getToken,
+        userId: getUserId(),
+        sessionId: getSessionId(),
+        token: getToken(),
         id: this.resultId
       }
       GetDetail(requestData).then(res => {

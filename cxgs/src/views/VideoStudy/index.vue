@@ -16,6 +16,7 @@
 import headerTop from '@/components/header/index.vue'
 import { GetVideoStudyMain } from '@/api/home'
 import { format } from '@/utils/timeChange'
+import { getUserId, getSessionId, getToken } from '@/utils/app'
 export default {
   components: {
     headerTop
@@ -35,9 +36,9 @@ export default {
     //获取视频列表
     getVideoStudyMain() {
       let requestData = {
-        userId: this.getUserId,
-        sessionId: this.getSessionId,
-        token: this.getToken,
+        userId: getUserId(),
+        sessionId: getSessionId(),
+        token: getToken(),
         currentPage: 1,
         videoNumber: 3
       }

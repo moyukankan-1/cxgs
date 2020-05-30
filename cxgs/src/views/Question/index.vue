@@ -10,6 +10,7 @@
 import headerTop from '@/components/header/index.vue'
 import examineList from '@/components/examine/index.vue'
 import { GetQuestion } from '@/api/home'
+import { getUserId, getSessionId, getToken } from '@/utils/app'
 export default {
   components: {
     headerTop,
@@ -23,9 +24,9 @@ export default {
   methods: {
     getQuestion() {
       let requestData = {
-        userId: this.getUserId,
-        sessionId: this.getSessionId,
-        token: this.getToken
+        userId: getUserId(),
+        sessionId: getSessionId(),
+        token: getToken()
       }
       GetQuestion(requestData).then(res => {
         this.examineList = res.data.data.items

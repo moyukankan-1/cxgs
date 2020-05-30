@@ -5,15 +5,8 @@ import store from './store'
 import './icons'
 import './router/premit'
 import md5 from 'js-md5'
-import { getUserId, getSessionId, getToken } from '@/utils/app'
 
 Vue.prototype.$md5 = md5
-
-Vue.prototype.getUserId = getUserId()
-Vue.prototype.getSessionId = getSessionId()
-Vue.prototype.getToken = getToken()
-
-
 
 Vue.config.productionTip = false
 

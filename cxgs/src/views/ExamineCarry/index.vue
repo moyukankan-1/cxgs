@@ -3,7 +3,7 @@
     <toolcip />
     <header-top title='考试' :show='true'/>
     <scroll class="scroll">
-      <clickMove :titles='titles' @already1='already1' @already2='already2'/>
+      <clickMove :titles='titles' @already='already'/>
       <div class="carry-list">
         <examine-list :list='examineList' :kao='false' :time='true' v-if='hidden'/>
         <div v-else class="not">暂无数据</div>
@@ -78,11 +78,12 @@ export default {
     }
   },
   methods: {
-    already1() {
-      this.hidden = true
-    },
-    already2() {
-      this.hidden = false
+    already(id) {
+      if(id == 0) {
+        this.hidden = true
+      }else if(id == 1) {
+        this.hidden = false
+      }
     }
   }
 }

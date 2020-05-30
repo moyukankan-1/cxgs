@@ -190,3 +190,13 @@ export function GetSave(data) {
     data
   })
 }
+/**
+ * 我的--设置--修改提交
+ */
+export function GetCheck(data) {
+  return service.request({
+    method: "post",
+    url: "Assessment/index.html",
+    data
+  })
+}

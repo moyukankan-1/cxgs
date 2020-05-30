@@ -21,6 +21,7 @@
 <script>
 import { GetUser } from '@/api/home'
 import diaLog from '@/components/dialog/index.vue'
+import { getUserId, getSessionId, getToken } from '@/utils/app'
 export default {
   components: {
     diaLog
@@ -61,9 +62,9 @@ export default {
   methods: {
     getUser() {
       let requestData = {
-        userId: this.getUserId,
-        sessionId: this.getSessionId,
-        token: this.getToken
+        userId: getUserId(),
+        sessionId: getSessionId(),
+        token: getToken()
       }
       GetUser(requestData).then(res => {
         this.userList = res.data.data

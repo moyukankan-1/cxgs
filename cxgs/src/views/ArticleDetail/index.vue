@@ -15,6 +15,7 @@
 import headerTop from '@/components/header/index.vue'
 import { GetArticleDetail } from '@/api/home'
 import Loading from '@/components/loading/index.vue'
+import { getUserId, getSessionId, getToken } from '@/utils/app'
 export default {
   components: {
     headerTop,
@@ -31,9 +32,9 @@ export default {
   methods: {
     getArticleDetail() {
       let requestData = {
-        userId: this.getUserId,
-        sessionId: this.getSessionId,
-        token: this.getToken,
+        userId: getUserId(),
+        sessionId: getSessionId(),
+        token: getToken(),
         articleId: this.articleId
       }
       GetArticleDetail(requestData).then(res => {

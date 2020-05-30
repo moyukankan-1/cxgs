@@ -1,7 +1,7 @@
 <template>
   <div class="history">
     <header-top title='历史考试' :show='true'/>
-    <clickMove :titles='titles.item'  @already1='already1' @already2='already2'/>
+    <clickMove :titles='titles.item'  @already='already'/>
     <scroll class="scroll" @pullUp='loadMore' :pull-up-load='pullUpLoad' ref="scroll">
       <ul>
         <li v-for="item in history" :key="item.id" class="lis" @click="result(item.id)">
@@ -42,6 +42,7 @@ import Scroll from '@/components/scroll/index.vue'
 import diaLog from '@/components/dialog/index.vue'
 import Loading from '@/components/loading/index.vue'
 import { GetHistory } from '@/api/home'
+import { getUserId, getSessionId, getToken } from '@/utils/app'
 export default {
   components: {
     headerTop,
@@ -81,9 +82,9 @@ export default {
   methods: {
     getHistory() {
       let requestData = {
-        userId: this.getUserId,
-        sessionId: this.getSessionId,
-        token: this.getToken,
+        userId: getUserId(),
+        sessionId: getSessionId(),
+        token: getToken(),
         historyType: this.type,
         currentPage: this.page,
         examNumber: 10
@@ -102,25 +103,21 @@ export default {
       }).catch(err => {})
     },
     //练习考试
-    already1() {
-      //练习模式type
-      this.type = 1
+    already(id) {
+      if(id == 0) {
+        //练习模式type
+        this.type = 1
+      }else if(id == 1) {
+        //闯关模式type
+        this.type = 2
+      }
       //重置当前页码
       this.page = 1
       this.isPull = false
       this.$refs.scroll.scroll.scrollTo(0,0,0)
       this.getHistory()
     },
-    //闯关模式
-    already2() {
-      //闯关模式type
-      this.type = 2
-      //重置当前页码
-      this.page = 1
-      this.isPull = false
-      this.$refs.scroll.scroll.scrollTo(0,0,0)
-      this.getHistory()
-    },
+   
     //上拉加载下一页
     loadMore() {
       //上拉加载打开loading

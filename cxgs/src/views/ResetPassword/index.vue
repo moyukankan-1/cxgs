@@ -23,6 +23,7 @@
 import headerTop from '@/components/header/index.vue'
 import { GetResetPassword } from '@/api/home'
 import diaLog from '@/components/dialog/index.vue'
+import { getUserId, getSessionId, getToken } from '@/utils/app'
 export default {
   components: {
     headerTop,
@@ -42,16 +43,14 @@ export default {
   methods: {
     getResetPassword() {
       let requestData = {
-        userId: this.getUserId,
-        sessionId: this.getSessionId,
-        token: this.getToken,
+        userId: getUserId(),
+        sessionId: getSessionId(),
+        token: getToken(),
         oldPassword: this.forms.oldPassword,
         newPassword: this.forms.newPassword,
         againPassword: this.forms.againPassword
       }
       GetResetPassword(requestData).then(res => {
-        console.log(this.forms.oldPassword)
-        console.log(this.forms.againPassword)
         if(this.forms.newPassword == '') {
           this.dias('原密码不能为空!')
         }else if(this.forms.oldPassword == '') {

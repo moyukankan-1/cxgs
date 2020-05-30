@@ -7,6 +7,7 @@
 <script>
 import { GetErrorDetail } from '@/api/home'
 import headerTop from '@/components/header/index.vue'
+import { getUserId, getSessionId, getToken } from '@/utils/app'
 export default {
   components: {
     headerTop
@@ -22,9 +23,9 @@ export default {
   methods: {
     getErrorDetail() {
       let requestData = {
-        userId: this.getUserId,
-        sessionId: this.getSessionId,
-        token: this.getToken,
+        userId: getUserId(),
+        sessionId: getSessionId(),
+        token: getToken(),
         itemId: this.itemId,
         shitiId: this.thitiId
       }
