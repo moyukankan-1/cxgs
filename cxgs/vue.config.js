@@ -1,7 +1,7 @@
 const {resolve} = require('path')
 
 module.exports = {
-  publicPath: './src',
+  publicPath: './dist',
 
   // 将构建好的文件输出到哪里
   outputDir: 'dist',
