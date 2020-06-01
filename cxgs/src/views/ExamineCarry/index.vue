@@ -1,6 +1,5 @@
 <template>
   <div class="examine-carry">
-    <toolcip />
     <header-top title='考试' :show='true'/>
     <scroll class="scroll">
       <clickMove :titles='titles' @already='already'/>
@@ -12,14 +11,12 @@
   </div>
 </template>
 <script>
-import Toolcip from '@/components/toolcip/index.vue'
 import headerTop from '@/components/header/index.vue'
 import clickMove from '@/components/clickMove/index.vue'
 import examineList from '@/components/examine/index.vue'
 import Scroll from '@/components/scroll/index.vue'
 export default {
   components: {
-    Toolcip,
     headerTop,
     clickMove,
     examineList,

@@ -52,13 +52,6 @@ Vue.use(VueRouter)
       }
     },
     {
-      path: '/answer',
-      component: () => import('../views/Answer/index.vue'),
-      meta: {
-        keep: true
-      }
-    },
-    {
       path: '/videoStudy',
       component: () => import('../views/VideoStudy/index.vue')
     },

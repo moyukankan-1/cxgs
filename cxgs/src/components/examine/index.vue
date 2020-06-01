@@ -20,7 +20,7 @@ export default {
   },
   methods: {
     answer() {
-      this.$router.push('/answer')
+      this.$router.push('/join')
     }
   }
 }
