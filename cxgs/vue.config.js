@@ -1,25 +1,27 @@
 const {resolve} = require('path')
 
 module.exports = {
-  publicPath: process.env.NODE_ENV === 'production' ? '' : '/',
+  publicPath: '/cxgs/dist/',
 
   // 将构建好的文件输出到哪里
-  outputDir: process.env.NODE_ENV === 'production' ? 'dist' : 'devdist',
+  outputDir: 'dist',
 
-  // 是否在保存的时候使用 `eslint-loader` 进行检查。
-  // 有效的值：`ture` | `false` | `"error"`
-  // 当设置为 `"error"` 时，检查出的错误会触发编译失败。
+  assetsDir: '',
   lintOnSave: false,
 
-  // 使用带有浏览器内编译器的完整构建版本
-  // 查阅 https://cn.vuejs.org/v2/guide/installation.html#运行时-编译器-vs-只包含运行时
-  // compiler: false,
+  // 用于多页配置，默认是 undefined
+  pages: {
+    index: {
+      // 入口文件
+      entry: 'src/main.js',　　/*这个是根入口文件*/
+      // 输出文件
+      filename: 'index.html',
+    }
+  },
 
   // 是否为生产环境构建生成 source map？
   productionSourceMap: false,
 
-  // 调整内部的 webpack 配置。
-  // 查阅 https://github.com/vuejs/vue-docs-zh-cn/blob/master/vue-cli/webpack.md
   chainWebpack: (config) => {
     config.module.rules.delete('svg') // 重点:删除默认配置中处理svg,
     // const svgRule = config.module.rule('svg')
@@ -70,7 +72,6 @@ module.exports = {
   parallel: require('os').cpus().length > 1,
 
   // PWA 插件的选项。
-  // 查阅 https://github.com/vuejs/vue-docs-zh-cn/blob/master/vue-cli-plugin-pwa/README.md
   pwa: {},
 
   // 第三方插件的选项
