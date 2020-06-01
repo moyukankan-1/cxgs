@@ -1,7 +1,7 @@
 const {resolve} = require('path')
 
 module.exports = {
-  publicPath: '/cxgs/dist/',
+  publicPath: './src',
 
   // 将构建好的文件输出到哪里
   outputDir: 'dist',
