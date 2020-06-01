@@ -108,6 +108,7 @@ export default {
         token: getToken()
       }
       GetHome(requestData).then(res => {
+        this.$refs.scroll.scroll.refresh()
         this.homeList = res.data.data
       }).catch(err => {})
     },

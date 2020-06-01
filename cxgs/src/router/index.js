@@ -113,10 +113,6 @@ Vue.use(VueRouter)
     {
       path: '/examCheck',
       component: () => import('../views/ExamCheck/index.vue')
-    },
-    {
-      path: '/makeExam',
-      component: () => import('../views/MakeExam/index.vue')
     }
   ]
 
