@@ -131,6 +131,7 @@ export default {
   * 挂载完成生命周期
   */
   mounted() {
+    //获取首页数据
     this.getHome()
   }
 }
